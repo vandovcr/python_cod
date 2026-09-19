@@ -167,6 +167,13 @@ e agendamento. Durante a semana só resta responder comentários.
 | 4 | Qui | Segurança | Anatomia de um ataque de ransomware, fase por fase | Estudo de caso |
 | 4 | Sáb | Cloud | Zero Trust: o que é de verdade (e o que é marketing) | Mito x verdade |
 
+> Os 12 roteiros já estão escritos em [`roteiros/`](../roteiros/), um arquivo por
+> post, na ordem da tabela. Gere o mês inteiro com:
+>
+> ```bash
+> python3 gerar_carrossel.py roteiros/*.md
+> ```
+
 ---
 
 ## 8. Exemplo pronto — carrossel completo

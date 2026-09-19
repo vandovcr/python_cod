@@ -77,6 +77,7 @@ O gerador avisa quando o roteiro quebra as regras do plano — capa com mais de
 
 | Caminho | O que é |
 |---|---|
+| `roteiros/` | Os 12 roteiros do primeiro mês, prontos para gerar |
 | `docs/plano-carrossel-instagram.md` | Estratégia: pilares, calendário, métricas, backlog de temas |
 | `docs/publicacao-automatica-instagram.md` | Como configurar a publicação automática |
 | `carrossel/design.py` | Design system (cores, fontes, grid) — mude aqui, muda em tudo |

@@ -14,6 +14,7 @@ from PIL import Image, ImageDraw
 from . import design as d
 from .roteiro import Bloco, Roteiro, Slide
 
+MAX_PALAVRAS_CAPA = 7   # regra da seção 3 do plano
 RAIO_CAIXA = 24
 ESPACO_ENTRE_BLOCOS = 34
 LARGURA_UTIL = d.LARGURA - 2 * d.MARGEM
@@ -55,7 +56,7 @@ def _desenhar_linhas(draw, linhas, fonte, x, y, cor, tamanho, ancora="la") -> in
 # --------------------------------------------------------------- blocos
 
 def _layout_blocos(blocos: list[Bloco], tema: d.Tema, tamanho: int,
-                   x: int, y: int, largura: int, draw=None) -> int:
+                   x: int, y: int, largura: int, draw=None, avisar=None) -> int:
     """Desenha (ou só mede) a lista de blocos. Devolve o y final."""
     f_corpo = d.fonte("corpo", tamanho)
     f_mono = d.fonte("mono", max(26, tamanho - 8))
@@ -94,7 +95,13 @@ def _layout_blocos(blocos: list[Bloco], tema: d.Tema, tamanho: int,
         elif bloco.tipo == "codigo":
             linhas: list[str] = []
             for bruta in bloco.conteudo.split("\n"):
-                linhas.extend(quebrar(bruta, f_mono, largura - 64) if bruta.strip() else [""])
+                if not bruta.strip():
+                    linhas.append("")
+                    continue
+                quebradas = quebrar(bruta, f_mono, largura - 64)
+                if len(quebradas) > 1 and draw is not None and avisar:
+                    avisar(f"linha de código quebrou automaticamente: {bruta.strip()[:44]}…")
+                linhas.extend(quebradas)
             altura = len(linhas) * _altura_linha(mono_tam)
             if draw is not None:
                 draw.rounded_rectangle(
@@ -157,7 +164,7 @@ def _render_capa(draw, slide: Slide, tema: d.Tema, avisar=None) -> None:
         slide.titulo, tema, tema.escala.capa_max, tema.escala.capa_min,
         LARGURA_UTIL, altura_max=560,
     )
-    if avisar and len(slide.titulo.split()) > 12:
+    if avisar and len(slide.titulo.split()) > MAX_PALAVRAS_CAPA:
         avisar(f"capa com {len(slide.titulo.split())} palavras — o plano pede no máximo 7")
     altura = len(linhas) * _altura_linha(tamanho)
     y = max(260, (limite - altura) // 2)
@@ -170,7 +177,7 @@ def _render_capa(draw, slide: Slide, tema: d.Tema, avisar=None) -> None:
     if slide.blocos:
         y += ESPACO_ENTRE_BLOCOS
         y = _layout_blocos(slide.blocos, tema, tema.escala.corpo,
-                           d.MARGEM, y, LARGURA_UTIL, draw=draw)
+                           d.MARGEM, y, LARGURA_UTIL, draw=draw, avisar=avisar)
 
     draw.text((d.MARGEM, max(y + 40, limite - 60)), "arrasta →",
               font=d.fonte("corpo_medio", 32), fill=tema.destaque, anchor="la")
@@ -194,7 +201,8 @@ def _render_conteudo(draw, slide: Slide, tema: d.Tema, avisar=None) -> None:
     fim = _layout_blocos(slide.blocos, tema, tamanho, d.MARGEM, y, LARGURA_UTIL)
     y += int(max(0, limite - fim) * 0.35)
 
-    _layout_blocos(slide.blocos, tema, tamanho, d.MARGEM, y, LARGURA_UTIL, draw=draw)
+    _layout_blocos(slide.blocos, tema, tamanho, d.MARGEM, y, LARGURA_UTIL,
+                   draw=draw, avisar=avisar)
 
 
 def _render_cta(draw, slide: Slide, tema: d.Tema, avisar=None) -> None:
@@ -212,7 +220,8 @@ def _render_cta(draw, slide: Slide, tema: d.Tema, avisar=None) -> None:
         tamanho, coube = _corpo_que_cabe(slide.blocos, tema, y, limite, LARGURA_UTIL)
         if not coube and avisar:
             avisar("CTA longo demais — deixe uma chamada só")
-        _layout_blocos(slide.blocos, tema, tamanho, d.MARGEM, y, LARGURA_UTIL, draw=draw)
+        _layout_blocos(slide.blocos, tema, tamanho, d.MARGEM, y, LARGURA_UTIL,
+                       draw=draw, avisar=avisar)
 
 
 _RENDERIZADORES = {"capa": _render_capa, "conteudo": _render_conteudo, "cta": _render_cta}

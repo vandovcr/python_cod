@@ -4,7 +4,7 @@ pilar: redes
 handle: "@seuperfil"
 ---
 
-## O QUE ACONTECE DEPOIS QUE VOCÊ APERTA ENTER?
+## O QUE ACONTECE AO APERTAR ENTER?
 
 Os 200 ms entre o clique e a página na tela.
 

@@ -1,0 +1,5 @@
+.env
+saida/
+fontes/
+__pycache__/
+*.pyc

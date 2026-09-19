@@ -1,0 +1,3 @@
+Pillow>=10.0
+requests>=2.31
+boto3>=1.34   # opcional: só para hospedar as imagens em S3/R2

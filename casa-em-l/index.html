@@ -101,6 +101,7 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
   <div><dt>Área coberta total</dt><dd>≈ 141 m²</dd></div>
   <div><dt>Piscina</dt><dd>7 × 3 m</dd></div>
   <div><dt>Dormitórios</dt><dd>3 suítes</dd></div>
+  <div><dt>Aterro do patamar</dt><dd>0,4 → 1,0 m</dd></div>
 </dl>
 
 <section class="section" aria-labelledby="t-plantas">
@@ -121,6 +122,25 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
     <div class="legend" id="legend"></div>
     <p class="caption" id="caption"></p>
   </div>
+</section>
+
+<section class="section" aria-labelledby="t-nivel">
+  <h2 id="t-nivel">Terreno e nível</h2>
+  <p style="max-width:70ch">O terreno desce da casa antiga para o muro dos fundos. Pelas suas medidas, o patamar da casa nova precisa de aterro de cerca de 0,4 m junto à casa antiga e cerca de 1,0 m junto ao muro dos fundos. O corte abaixo passa pela gourmet e pela piscina.</p>
+  <div class="board">
+    <div class="stage" id="section-fig"></div>
+    <p class="caption">Corte longitudinal, do muro dos fundos (esquerda) até a casa antiga (direita). Alturas aproximadas, a confirmar com nível a laser ou mangueira de nível.</p>
+  </div>
+  <ul class="notes">
+    <li><strong>Nível de referência.</strong> Adotei ±0,00 no patamar aterrado, que deve coincidir com o piso da varanda da casa antiga (as fotos mostram degraus ali). Como o terreno segue descendo, o aterro cresce de 0,4 m para 1,0 m nos fundos.</li>
+    <li><strong>Não aterre encostado nos muros.</strong> O muro de blocos dos fundos e a parede branca da esquerda não foram feitos para segurar terra. A casa e a piscina ganham estrutura própria (baldrames e muro de arrimo no pé do aterro), com junta e impermeabilização junto à divisa e dreno atrás do arrimo.</li>
+    <li><strong>Piscina semienterrada.</strong> Com o patamar elevado, a piscina de 1,10 a 1,40 m de profundidade precisa escavar só 0,7 a 1,0 m do terreno natural. A terra escavada, cerca de 17 m³, volta como aterro.</li>
+    <li><strong>Volume.</strong> O patamar inteiro leva cerca de 90 m³ compactados. Descontando a terra da piscina, faltam uns 75 m³, o que dá em torno de 95 m³ soltos, ou 10 a 12 viagens de caminhão de 8 a 10 m³. Para gastar menos, dá para aterrar só sob a casa e o deck e deixar o resto do quintal em degrau.</li>
+    <li><strong>Entrada.</strong> O jardim de entrada fica 0,4 m acima do chão atual. Prevejo 2 ou 3 degraus. Rampa exigiria uns 5 m de comprimento.</li>
+    <li><strong>Água da chuva.</strong> Dê caimento de uns 1% do pátio para o corredor lateral e ligue à rede da rua. Não despeje nos vizinhos.</li>
+    <li><strong>Vizinhos.</strong> As duas aberturas de tijolo de vidro na parede branca da esquerda são do vizinho e ventilam a casa dele. Encostar a casa nova ali as tapa, então vale deixar um afastamento ou combinar com ele. O prédio de tijolos nos fundos tem janelas voltadas para o seu quintal, e a varanda e a piscina ficam à vista. Plantas altas ou peitoril mais alto ajudam.</li>
+    <li><strong>Limpeza do terreno.</strong> Saem a cobertura metálica, a pilha de tijolos, o varal e a trepadeira grande no centro do quintal antes de terraplenar.</li>
+  </ul>
 </section>
 
 <section class="section" aria-labelledby="t-amb">
@@ -160,7 +180,8 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
 <section class="section" aria-labelledby="t-ver">
   <h2 id="t-ver">O que confirmar antes de detalhar</h2>
   <ul class="notes">
-    <li><strong>Medidas.</strong> Usei a faixa de 10 m de largura por 13 m de profundidade que você informou, medida a partir do fundo da casa central. Leve trena e confirme onde termina de fato a parede de trás dela. O galpão de zinco e os anexos do fundo foram considerados demolidos.</li>
+    <li><strong>Medidas.</strong> Usei a faixa de 10 m de largura por 13 m de profundidade que você informou, medida a partir do fundo da casa central. Leve trena e confirme onde termina de fato a parede de trás dela. A cobertura metálica e os anexos do fundo foram considerados demolidos.</li>
+    <li><strong>Níveis.</strong> Os 0,4 m e 1,0 m de aterro vêm da sua estimativa. Meça com nível a laser em três pontos (casa antiga, meio e muro dos fundos) antes de fechar a altura do patamar.</li>
     <li><strong>Divisas.</strong> Fundos e lateral esquerda são parede cega ou janela alta, porque abertura a menos de 1,5 m da divisa pede cuidado (Código Civil, art. 1.301). Os banheiros ficam justamente nessas paredes, com janela alta. Confirme com seu arquiteto e a prefeitura.</li>
     <li><strong>Ocupação e permeabilidade.</strong> A casa ocupa 62% da faixa dos fundos. Confira a taxa de ocupação e a área permeável do zoneamento, que contam o lote inteiro de 300 m², casa central incluída.</li>
     <li><strong>Utilidades separadas.</strong> Preveja água, luz e esgoto próprios para a nova casa, para a casa central poder ter o seu projeto depois sem mexer aqui.</li>
@@ -253,6 +274,7 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
     s+=text(mxp(2.5),4.6,['Casa nova','sobrado em L'],'tx');
     s+=text(mxp(7.5),2.5,['Gourmet','+ suítes em cima'],'tx');
     s+=text(mxp(2.5),8.6,['80 m² no térreo'],'ta');
+    s+='<text class="tm" text-anchor="middle" transform="translate('+(10*S+22)+' '+6.5*S+') rotate(-90)">aterro: 0,4 m (casa antiga) → 1,0 m (fundos)</text>';
     // seta de acesso
     var dx=mxp(1.7);
     s+='<path class="arrow dash" d="M'+1.15*S+' '+15.3*S+' V'+12.2*S+' H'+dx*S+' V'+11.35*S+'"/>';
@@ -328,7 +350,7 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
   };
   var captions={
     site:'Implantação. A casa nova ocupa o fundo; o jardim de entrada, com 2 m de largura em frente, separa a casa nova da casa central. A seta mostra o caminho de quem vem do corredor lateral.',
-    ground:'Térreo. Cozinha, sala e gourmet formam um só ambiente contínuo. A gourmet e a sala abrem com portas de vidro (traço azul) para o deck e a piscina. A escada sobe junto à parede da esquerda.',
+    ground:'Térreo, no nível ±0,00 do patamar aterrado. Cozinha, sala e gourmet formam um só ambiente contínuo. A gourmet e a sala abrem com portas de vidro (traço azul) para o deck e a piscina. A escada sobe junto à parede da esquerda.',
     upper:'Pavimento superior. As três suítes ficam na ala dos fundos, com banheiros nas paredes da divisa, e abrem para uma galeria que faz sombra no térreo. A ala lateral vira terraço descoberto.'
   };
   var tables={
@@ -358,6 +380,43 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
   }
   document.querySelectorAll('[data-view]').forEach(function(b){b.addEventListener('click',function(){view=b.dataset.view;render()})});
   document.querySelectorAll('[data-side]').forEach(function(b){b.addEventListener('click',function(){flip=b.dataset.side==='right';render()})});
+  function sectionFig(){
+    var k=26, X=function(y){return 44+y*k}, Z=function(z){return 18+(6.4-z)*k};
+    var P=function(pts){return pts.map(function(p){return X(p[0])+','+Z(p[1])}).join(' ')};
+    var nat=function(y){return -1+0.6*y/13};
+    var s='';
+    // solo e aterro
+    s+='<polygon class="rm f-exist" points="'+P([[0,-1],[13,-0.4],[13,-1.8],[0,-1.8]])+'"/>';
+    s+='<polygon class="rm f-deck" points="'+P([[0,-1],[13,-0.4],[13,0],[0,0]])+'"/>';
+    s+=text2(X(3.2),Z(-1.5),'terreno natural','ta','middle');
+    // piscina
+    s+='<polygon class="rm f-pool" points="'+P([[5.6,-0.15],[12.6,-0.15],[12.6,-1.4],[5.6,-1.1]])+'"/>';
+    s+='<polygon class="rm f-circ" points="'+P([[5.6,0],[12.6,0],[12.6,-0.15],[5.6,-0.15]])+'"/>';
+    s+=text2(X(9.1),Z(-0.8),'Piscina','tx','middle');
+    // muro dos fundos e casa antiga
+    s+='<rect class="rm f-bldg" x="'+X(-0.45)+'" y="'+Z(2)+'" width="'+0.45*k+'" height="'+3*k+'"/>';
+    s+='<rect class="rm f-exist" x="'+X(13)+'" y="'+Z(3)+'" width="'+2.2*k+'" height="'+3*k+'"/>';
+    s+=text2(X(14.1),Z(1.5),'casa','ta','middle')+text2(X(14.1),Z(1.1),'antiga','ta','middle');
+    // casa nova
+    s+='<rect class="rm w f-cov" x="'+X(0)+'" y="'+Z(2.9)+'" width="'+5*k+'" height="'+2.9*k+'"/>';
+    s+='<rect class="rm w f-sleep" x="'+X(0)+'" y="'+Z(6)+'" width="'+5*k+'" height="'+2.9*k+'"/>';
+    s+='<rect class="rm w f-bal" x="'+X(5)+'" y="'+Z(3.1)+'" width="'+1.1*k+'" height="'+0.2*k+'"/>';
+    s+=text2(X(2.5),Z(1.45),'Gourmet','tx','middle')+text2(X(2.5),Z(4.55),'Suítes','tx','middle');
+    // linha ±0,00
+    s+='<line class="rm" style="stroke-width:2" x1="'+X(0)+'" x2="'+X(13)+'" y1="'+Z(0)+'" y2="'+Z(0)+'"/>';
+    s+=text2(X(-0.55),Z(0)+3,'±0,00','ta','end');
+    // cotas
+    s+='<path class="dim" d="M'+X(0.5)+' '+Z(0)+' V'+Z(-0.97)+' M'+(X(0.5)-4)+' '+Z(0)+' H'+(X(0.5)+4)+' M'+(X(0.5)-4)+' '+Z(-0.97)+' H'+(X(0.5)+4)+'"/>';
+    s+=text2(X(0.5)+8,Z(-0.5)+3,'aterro ≈ 1,0 m','ta','start');
+    s+='<path class="dim" d="M'+X(13.35)+' '+Z(-0.4)+' H'+X(14.9)+'"/>';
+    s+='<path class="dim" d="M'+X(13.6)+' '+Z(0)+' V'+Z(-0.4)+'"/>';
+    s+=text2(X(13.35),Z(-1.0),'aterro ≈ 0,4 m','ta','start');
+    s+='<path class="arrow" d="M'+X(13.2)+' '+Z(-0.85)+' L'+X(13.6)+' '+Z(-0.2)+'"/>';
+    s+=text2(X(0)-2,Z(-1.8)+14,'fundos','tm','start')+text2(X(13),Z(-1.8)+14,'frente','tm','end');
+    return '<svg viewBox="0 0 '+(44+13*k+2.2*k+50)+' '+(18+8.2*k+22)+'" role="img" aria-label="Corte do terreno com aterro de 0,4 m a 1,0 m, casa em dois pavimentos e piscina semienterrada">'+s+'</svg>';
+  }
+  function text2(x,y,t,cls,anchor){return '<text class="'+cls+'" text-anchor="'+anchor+'" x="'+x+'" y="'+y+'">'+t+'</text>'}
+  $('section-fig').innerHTML=sectionFig();
   renderTable();
   render();
 })();

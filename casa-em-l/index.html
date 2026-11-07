@@ -163,8 +163,9 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
   <ul class="notes">
     <li><strong>Capacidade.</strong> Contei 6 moradores (3 suítes e hóspedes) a 200 L por dia, ou 1.200 L diários. A reserva de 2 dias pede 2.400 L. Duas caixas de 1.500 L somam 3.000 L e dão folga: com uma em limpeza, a outra segue abastecendo.</li>
     <li><strong>Lugar.</strong> As caixas ficam na laje técnica da cobertura da ala dos fundos, num ambiente de 3,6 × 1,8 m (6,5 m²) sobre a parede que divide as suítes 2 e 3, onde a laje se apoia em vigas. Cozinha, lavanderia e banhos estão todos na faixa dos fundos, então a tubulação vertical desce curta e direta. Cheias, as duas caixas pesam cerca de 3,3 t, e o engenheiro calcula laje e vigas para essa carga.</li>
-    <li><strong>Acesso e limpeza.</strong> Uma escada de marinheiro com guarda-corpo parte da galeria e entra por uma abertura na platibanda. Assim as suítes ficam fechadas e ninguém cruza a casa para limpar as caixas. A laje leva impermeabilização com manta, caimento para ralos e extravasores (ladrões) na platibanda.</li>
-    <li><strong>Laje de lazer.</strong> A cobertura também vira área de lazer, atrás da platibanda de 1,1 m ou mais. A escada de marinheiro serve só para manutenção, então o uso diário pede uma escada fixa, cujo lugar ainda precisa ser decidido. A laje é calculada para 3 kN/m² de uso, além das caixas d'água.</li>
+    <li><strong>Acesso e limpeza.</strong> Uma escada fixa de concreto, com 0,90 m de largura, sobe do terraço e entra na cobertura por um portão na platibanda, na faixa de parede cega entre as janelas das suítes 3 e 2. As suítes ficam fechadas e ninguém cruza a casa para limpar as caixas. A laje leva impermeabilização com manta, caimento para ralos e extravasores (ladrões) na platibanda. Os detalhes estão na prancha de estrutura e escadas.</li>
+    <li><strong>Laje de lazer.</strong> A cobertura também é área de lazer, atrás da platibanda de 1,1 m ou mais, e as caixas ficam a 1,1 m de passagem da escada. A laje é calculada para 3 kN/m² de uso, além das caixas d'água.</li>
+    <li><strong>Escadas.</strong> A escada principal nasce no hall e chega ao terraço, em frente às janelas das suítes, sem passar por nenhum quarto. O terraço também tem uma saída independente para o jardim de entrada, por uma escada caracol externa.</li>
     <li><strong>Altura.</strong> Com as tampas, as caixas chegam a cerca de 7,4 m. A platibanda sobe para 7,6 m só diante delas, do lado do quintal, para escondê-las. Confirme o gabarito. Se apertar, três caixas de 1.000 L ficam mais baixas, com 1,2 m.</li>
     <li><strong>Pressão da rua.</strong> Como o terreno recebe aterro de até 1 m, confirme a pressão da rede. Se for baixa, uma cisterna com bomba, sob o deck, enche as caixas de cima.</li>
     <li><strong>Aquecedor solar (opcional).</strong> Os coletores caberiam na mesma laje, ao lado das caixas, sem aparecer do quintal.</li>
@@ -249,6 +250,11 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
   function line(x1,y1,x2,y2,cls){
     return '<line class="'+cls+'" x1="'+mxp(x1)*S+'" y1="'+y1*S+'" x2="'+mxp(x2)*S+'" y2="'+y2*S+'"/>';
   }
+  function spiral(cx,cy,r){
+    var X=mxp(cx)*S, Y=cy*S, s='<circle class="rm f-circ" cx="'+X+'" cy="'+Y+'" r="'+r*S+'"/>';
+    for(var i=0;i<17;i++){var a=i*2*Math.PI/17-Math.PI/2; s+='<line class="furn" x1="'+(X+Math.cos(a)*.075*S)+'" y1="'+(Y+Math.sin(a)*.075*S)+'" x2="'+(X+Math.cos(a)*r*S)+'" y2="'+(Y+Math.sin(a)*r*S)+'"/>'}
+    return s+'<circle cx="'+X+'" cy="'+Y+'" r="'+.075*S+'" fill="var(--ink)"/>';
+  }
   function stair(x,y,w,h){
     var X=mxr(x,w)*S, s='<rect class="rm f-circ" x="'+X+'" y="'+y*S+'" width="'+w*S+'" height="'+h*S+'"/>';
     var n=14;
@@ -313,7 +319,7 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
       lot,
       {x:5,y:5,w:5,h:7.6,c:'deck',t:1,n:'',a:''},
       {x:5,y:12.6,w:5,h:0.4,c:'out',t:1},
-      {x:0,y:11,w:5,h:2,c:'out',t:1,n:'Entrada',a:'10 m²',lx:3.2,ly:12},
+      {x:0,y:11,w:5,h:2,c:'out',t:1,n:'Entrada',a:'10 m²',lx:1.9,ly:12.4},
       {x:6.8,y:5.6,w:3,h:7,c:'pool',n:'Piscina\n7 × 3 m',t:0},
       {x:0,y:0.3,w:5,h:4.7,c:'serv',n:'Cozinha',a:'16,7 m²',lx:4.3,ly:1.55},
       {x:0,y:0.3,w:2.4,h:2.1,c:'wet',t:1,n:'Lav.\nDesp.',a:'5,0 m²'},
@@ -331,7 +337,8 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
     [{x:3.7,y:0.4,w:1.3,h:0.6},{x:2.4,y:2.7,w:2.2,h:0.9},{x:6.2,y:0.4,w:2,h:0.7},{x:6.2,y:2.4,w:2.6,h:1.1},
      {x:2.8,y:5.5,w:2,h:1},{x:1.4,y:7.7,w:2.6,h:0.9},{x:5.3,y:7,w:0.6,h:1.8,r:6},{x:5.3,y:9.2,w:0.6,h:1.8,r:6}
     ].forEach(function(f){s+=furn(f)});
-    s+=stair(0,6.1,1,3.8);
+    s+=stair(0.2,6.5,0.9,4.4);
+    s+=spiral(4.15,11.95,.85)+text(mxp(4.15),12.95,['caracol'],'ta');
     // aberturas
     s+=line(5,5.7,5,8.6,'glass');            // sala -> deck
     s+=line(5.4,5,9.6,5,'glass');            // gourmet -> deck
@@ -361,12 +368,15 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
       {x:7.9,y:0.3,w:2.1,h:1.5,c:'wet',n:'Banho',a:'3,2 m²'},
       {x:0,y:5,w:5,h:1.1,c:'circ',n:'',a:''},
       {x:5,y:5,w:5,h:1.1,c:'bal',d:1,n:'',a:''},
-      {x:0,y:6.1,w:5,h:4.9,c:'out',n:'Terraço descoberto',a:'≈ 20 m²',lx:3,ly:8.6},
-      {x:0,y:6.1,w:1,h:3.8,c:'void',t:0}
+      {x:0,y:5.0,w:5,h:6,c:'out',n:'Terraço',a:'≈ 18 m²',lx:4.2,ly:9.9},
+      {x:0.1,y:6.5,w:0.9,h:3.3,c:'void',t:0}
     ];
     s+=draw(rooms);
     s+=text(mxp(5),5.55,['Galeria · varanda'],'tx');
-    s+=stair(0,6.1,1,3.8);
+    s+=stair(0.1,6.5,0.9,3.3);
+    s+=stair(2.55,5.0,0.9,4.05);
+    s+=text(mxp(4.2),6.6,['escada','cobertura'],'ta');
+    s+=spiral(4.15,11.95,.85)+text(mxp(1.6),11.9,['caracol','externa'],'ta');
     s+=line(1,5,2,5,'door')+line(4,5,5,5,'door')+line(7,5,8,5,'door');
     s+=line(6.6,5,9.4,5,'glass');
     s+=line(2.4,0.3,2.4,1.5,'glass')+line(3.6,0.3,3.6,1.5,'glass');
@@ -385,19 +395,17 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
     s+=draw([{x:2.4,y:0.3,w:1.2,h:1.5,c:'lot',d:1,t:0,n:'Poço',a:'(aberto)'},
              {x:6.3,y:0.55,w:1.2,h:0.9,c:'lot',d:1,t:1,n:'zenital'},
              {x:8.3,y:0.55,w:1.3,h:0.9,c:'lot',d:1,t:1,n:'zenital'},
-             {x:1.2,y:2.4,w:3.6,h:1.8,c:'wet',n:'',a:''}]);
+             {x:1.2,y:1.9,w:3.6,h:1.8,c:'wet',n:'',a:''}]);
     [2.3,3.7].forEach(function(cx){
-      s+='<circle class="rm f-pool" cx="'+mxp(cx)*S+'" cy="'+3.3*S+'" r="'+0.7*S+'"/>';
-      s+=text(cx,3.3,['1.500 L'],'ta');
+      s+='<circle class="rm f-pool" cx="'+mxp(cx)*S+'" cy="'+2.8*S+'" r="'+0.7*S+'"/>';
+      s+=text(cx,2.8,['1.500 L'],'ta');
     });
-    s+=text(mxp(3),2.15,['Caixas d\'água · 3.000 L'],'tx');
-    s+=line(4.2,5,4.8,5,'door');
-    s+=rect({x:4.3,y:5.05,w:0.4,h:0.7,c:'circ',t:1});
-    for(var i=1;i<6;i++){var yy=(5.05+0.7*i/6)*S;s+='<line class="furn" x1="'+(mxr(4.3,0.4))*S+'" x2="'+(mxr(4.3,0.4)+0.4)*S+'" y1="'+yy+'" y2="'+yy+'"/>'}
-    s+=text(mxp(2.6),5.55,['acesso: escada de marinheiro'],'ta');
+    s+=text(mxp(3),3.95,['Caixas d\'água · 3.000 L'],'tx');
+    s+=line(2.55,5,3.45,5,'door');
+    s+=text(mxp(3),4.7,['portão e escada fixa'],'ta');
     s+=back();
     s+=dims();
-    return wrap(13,s,'Planta da cobertura: laje técnica com duas caixas d\'água, poço de luz, claraboias e acesso por escada de marinheiro');
+    return wrap(13,s,'Planta da cobertura: laje técnica com duas caixas d\'água, poço de luz, claraboias e acesso pela escada fixa');
   }
 
   var legends={
@@ -411,7 +419,7 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
     ground:'Térreo, no nível ±0,00 do patamar aterrado. Cozinha, sala e gourmet formam um só ambiente contínuo, e a cozinha e a lavanderia ganham luz e ventilação pelo poço de luz aberto. A gourmet e a sala abrem com portas de vidro (traço azul) para o deck e a piscina. A escada sobe junto à parede da esquerda.',
     upper:'Pavimento superior. As três suítes ficam na ala dos fundos, com a parede dos fundos totalmente cega, que fecha a vista dos vizinhos. Os banhos das suítes 2 e 3 abrem para o poço de luz, e o banho e o closet da master têm claraboias (quadrados tracejados), e abrem para uma galeria que faz sombra no térreo. A ala lateral vira terraço descoberto.'
   };
-  captions.roof='Cobertura, a última laje. A laje técnica fica atrás da platibanda e reúne as duas caixas d\'água, o poço de luz aberto, as claraboias dos banhos da master e o acesso por escada de marinheiro, partindo da galeria.';
+  captions.roof='Cobertura, a última laje. A laje técnica fica atrás da platibanda e reúne as duas caixas d\'água, o poço de luz aberto, as claraboias dos banhos da master e o acesso pela escada fixa, que sobe do terraço pelo portão da platibanda, partindo da galeria.';
   var tables={
     ground:[['Cozinha','16,7'],['Lavanderia e despensa','5,0'],['Gourmet','21,1'],['WC da piscina','2,4'],['Sala de estar e jantar (com escada)','19,0'],['Hall de entrada','7,0'],['Lavabo','4,0']],
     upper:[['Suíte 1 · dormitório master','12,8'],['Suíte 1 · closet','2,9'],['Suíte 1 · banho','3,2'],['Suíte 2 · dormitório','9,6'],['Suíte 2 · banho','3,6'],['Suíte 3 · dormitório','9,6'],['Suíte 3 · banho','3,6'],['Galeria e varanda','11,0']]
@@ -475,8 +483,8 @@ ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
     s+=text2(X(-3.4),Z(5.75),'vão de 15 cm','tx','start');
     s+=text2(X(2.5),Z(1.45),'Gourmet','tx','middle')+text2(X(2.5),Z(4.55),'Suítes','tx','middle');
     s+=text2(X(0.5),Z(7.0)-5,'platibanda ≈ 7,0 m','ta','start');
-    s+=R(2.4,6.05,4.2,7.4,'rm dash','style="fill:none"');
-    s+=text2(X(4.4),Z(6.7),'caixas d\'água','ta','start');
+    s+=R(2.1,6.05,3.5,7.4,'rm dash','style="fill:none"');
+    s+=text2(X(3.7),Z(6.7),'caixas d\'água','ta','start');
     // visão do vizinho bloqueada
     s+='<path d="M'+(X(-1.0)+6)+' '+Z(3.7)+' H'+(X(0.15)-2)+'" stroke="var(--warn)" stroke-width="1.5" stroke-dasharray="4 3" fill="none"/>';
     s+='<path d="M'+(X(0.15)-6)+' '+(Z(3.7)-4)+' l8 8 m0 -8 l-8 8" stroke="var(--warn)" stroke-width="2" fill="none"/>';

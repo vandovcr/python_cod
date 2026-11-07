@@ -1,0 +1,359 @@
+<title>Estrutura e Escadas da Casa em L</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout: aviso, prancha de pilares e vigas com alternância de nível, escadas em planta e corte, tabelas. */
+:root{
+  --bg:#EDF1F3; --panel:#FFFFFF; --ink:#14232C; --muted:#586A74; --line:#C7D3D9; --accent:#0B6B88; --accent-ink:#FFFFFF;
+  --warn-bg:#FFF3D6; --warn-ink:#5B3C00; --warn-line:#E3B04B;
+  --blk:#BFC9CF; --wallx:#9AA3A8; --lot:#F7F9FA; --pool:#7FC4DA; --bldg:#E9EDF0; --stair:#F2D9C5; --tank:#CFE3EC; --void:#DCE3E7; --soil:#CFCBC2; --fill:#D6C6AB; --hot:#B4541A;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-head:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E181E; --panel:#15242C; --ink:#E5EDF1; --muted:#93A6B0; --line:#2B3E48; --accent:#5BC0DE; --accent-ink:#0E181E;
+  --warn-bg:#3A2D10; --warn-ink:#F3DDA8; --warn-line:#8A6A1F;
+  --blk:#4A5C66; --wallx:#6C777C; --lot:#101D24; --pool:#2B7E9C; --bldg:#1F2F37; --stair:#5B4536; --tank:#2D4F5C; --void:#26343B; --soil:#3A3F40; --fill:#5E5039; --hot:#E58A4B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E181E; --panel:#15242C; --ink:#E5EDF1; --muted:#93A6B0; --line:#2B3E48; --accent:#5BC0DE; --accent-ink:#0E181E;
+  --warn-bg:#3A2D10; --warn-ink:#F3DDA8; --warn-line:#8A6A1F;
+  --blk:#4A5C66; --wallx:#6C777C; --lot:#101D24; --pool:#2B7E9C; --bldg:#1F2F37; --stair:#5B4536; --tank:#2D4F5C; --void:#26343B; --soil:#3A3F40; --fill:#5E5039; --hot:#E58A4B; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55;
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--font-head);font-weight:700;margin:0;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);line-height:1.08} h2{font-size:22px} h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);max-width:64ch;margin-top:8px}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line);border-radius:8px;padding:12px 14px;max-width:80ch}
+.board{background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;padding:12px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{font:500 14px var(--font-body);background:transparent;color:var(--ink);border:0;padding:8px 14px;cursor:pointer;min-height:40px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.stage{padding:12px;display:flex;justify-content:center}
+.stage svg{width:100%;max-width:560px;height:auto;display:block}
+.stage.wide svg{max-width:700px}
+.caption{padding:0 12px 14px;color:var(--muted);font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:0 12px 12px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:10px;border:1px solid var(--ink);vertical-align:-1px;margin-right:5px}
+.t{font-family:var(--font-body);font-size:10.5px;fill:var(--ink);font-weight:500}
+.tm{font-family:var(--font-mono);font-size:9.5px;fill:var(--muted)}
+.lbl{font-family:var(--font-mono);font-size:9px;fill:var(--ink)}
+.bl{font-family:var(--font-mono);font-size:8.5px;fill:var(--hot)}
+.dim{stroke:var(--muted);stroke-width:1;fill:none}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--font-mono);white-space:nowrap}
+.scroll{overflow-x:auto}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.section{display:flex;flex-direction:column;gap:12px}
+ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+li{max-width:72ch}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Pré-dimensionamento · cobertura, terraço e escadas</span>
+  <h1>Estrutura e Escadas da Casa em L</h1>
+  <p class="lede">Pilares e vigas da laje de cobertura, que recebe as caixas d'água e a área de lazer, e as três escadas: do térreo para os quartos, da laje do terraço para a cobertura e a saída independente do terraço para o jardim.</p>
+</header>
+
+<div class="warn" role="note"><strong>Estudo preliminar.</strong> Seções e posições de vigas são sugestões de pré-dimensionamento e precisam ser confirmadas pelo engenheiro estrutural, junto com a fundação.</div>
+
+<section class="section" aria-labelledby="t-planta">
+  <h2 id="t-planta">Pilares e vigas</h2>
+  <div class="board">
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Nível">
+        <button type="button" data-n="roof" aria-pressed="true">Cobertura +6,05</button>
+        <button type="button" data-n="upper" aria-pressed="false">Piso superior e terraço +3,05</button>
+      </div>
+    </div>
+    <div class="stage" id="plan"></div>
+    <div class="legend" id="legend"></div>
+    <p class="caption" id="cap"></p>
+  </div>
+  <div class="panel scroll"><table id="tab-vigas"></table></div>
+</section>
+
+<section class="section" aria-labelledby="t-esc1">
+  <h2 id="t-esc1">Escada do térreo para os quartos</h2>
+  <div class="board">
+    <div class="stage wide" id="esc1"></div>
+    <p class="caption">Corte pelo eixo da escada, junto à parede oeste (X = 0,65 m). A frente da casa fica à direita e os fundos à esquerda. O pé-direito livre no bordo da laje é de 2,17 m.</p>
+  </div>
+  <div class="cols">
+    <div class="card"><h3>Dados da escada</h3>
+      <ul>
+        <li>Largura de 0,90 m, entre os pilares P12 e P13, ao longo da parede oeste.</li>
+        <li>17 espelhos de 18,35 cm e 16 pisos de 27,5 cm. A fórmula de Blondel dá 64 cm, no ponto certo.</li>
+        <li>Vão de 4,40 m, em laje maciça de 14 cm, apoiada no baldrame da frente e na viga V-T2 do terraço.</li>
+        <li>Guarda-corpo de 1,10 m no lado da abertura.</li>
+      </ul></div>
+    <div class="card"><h3>Como se chega</h3>
+      <ul>
+        <li>A escada nasce no hall, ao lado da porta de entrada. Quem sobe para os quartos não passa pela sala nem pela cozinha.</li>
+        <li>Ela chega ao terraço descoberto, em frente às janelas das suítes, e não dentro de nenhum quarto.</li>
+        <li>Da galeria, cada suíte tem a sua porta.</li>
+      </ul></div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="t-esc2">
+  <h2 id="t-esc2">Escada fixa para a laje das caixas d'água</h2>
+  <div class="board">
+    <div class="stage wide" id="esc2"></div>
+    <p class="caption">Corte pelo eixo da escada (X = 3,00 m). A escada sobe pelo terraço e chega à cobertura por uma abertura na platibanda, ao lado do pilar P9.</p>
+  </div>
+  <ul>
+    <li><strong>Local.</strong> A escada ocupa a faixa de parede cega entre as janelas das suítes 3 e 2, de X = 2,55 a 3,45 m. Para isso as janelas recuam 20 cm de cada lado: a da suíte 3 passa a X = 0,5 a 2,3 m e a da suíte 2, a X = 3,7 a 5,5 m. O ripado da suíte 3 termina em X = 2,4 m.</li>
+    <li><strong>Medidas.</strong> Largura de 0,90 m, 16 espelhos de 18,6 cm e 15 pisos de 27 cm. O primeiro degrau fica em Y = 9,05 m, apoiado na viga do terraço, e o último em Y = 5,0 m, junto ao pilar P9.</li>
+    <li><strong>Caixas d'água.</strong> Subiram para Y = 1,9 a 3,7 m, para deixar 1,1 m de passagem livre entre a escada e as caixas. As caixas ficam sobre as vigas V-C1 e V-C2.</li>
+    <li><strong>Lazer na cobertura.</strong> A escada serve também à área de lazer, de cerca de 22 m², a leste das caixas. A platibanda de 1,10 m ou mais faz o papel de guarda-corpo, e a abertura da escada ganha um portão.</li>
+  </ul>
+</section>
+
+<section class="section" aria-labelledby="t-esc3">
+  <h2 id="t-esc3">Saída independente do terraço para o jardim</h2>
+  <div class="board">
+    <div class="stage" id="esc3"></div>
+    <p class="caption">Escada caracol externa, no canto sudeste do jardim de entrada. O gradil do terraço ganha um portão para ela.</p>
+  </div>
+  <ul>
+    <li><strong>Por que caracol.</strong> O jardim de entrada tem só 2 m de profundidade, e uma escada reta precisaria de 4,8 m. A caracol ocupa um círculo de 1,70 m e leva o terraço direto ao jardim, sem passar por dentro da casa e sem tocar a sala nem os quartos.</li>
+    <li><strong>Medidas.</strong> Diâmetro de 1,70 m, 17 degraus de 18,35 cm de altura, uma volta completa e coluna central de aço. O degrau tem 22 cm na linha de caminhamento, apertado para uso diário e adequado para uso eventual.</li>
+    <li><strong>Apoios.</strong> Fica sobre um bloco de 60 × 60 cm com 1 estaca Ø30 (pilar P17, cerca de 25 kN), e o topo se apoia na viga de borda do terraço.</li>
+    <li><strong>Janela do lavabo.</strong> A janela do lavabo, que dava para o jardim, passa para a parede leste, em posição alta.</li>
+    <li><strong>Alternativa.</strong> Se preferir uma escada reta e confortável, só dá para fazê-la ao longo da parede leste, e isso bloqueia as portas de vidro da sala. Não recomendo.</li>
+  </ul>
+</section>
+
+<section class="section" aria-labelledby="t-res">
+  <h2 id="t-res">Resumo das escadas</h2>
+  <div class="panel scroll"><table>
+    <thead><tr><th>Escada</th><th class="n">Largura</th><th class="n">Espelhos</th><th class="n">Pisos</th><th>De → para</th></tr></thead>
+    <tbody>
+      <tr><td>Principal</td><td class="n">0,90 m</td><td class="n">17 × 18,35 cm</td><td class="n">16 × 27,5 cm</td><td>Hall do térreo → terraço e galeria (+3,12 m)</td></tr>
+      <tr><td>Cobertura</td><td class="n">0,90 m</td><td class="n">16 × 18,6 cm</td><td class="n">15 × 27 cm</td><td>Terraço (+3,12 m) → laje das caixas e lazer (+6,10 m)</td></tr>
+      <tr><td>Caracol externa</td><td class="n">Ø 1,70 m</td><td class="n">17 × 18,35 cm</td><td class="n">22 cm na linha</td><td>Terraço (+3,12 m) → jardim de entrada</td></tr>
+    </tbody></table></div>
+</section>
+</div>
+
+<script>
+(function(){
+  var S=40, M=34, W=10*S+2*M, lvl='roof';
+  var $=function(i){return document.getElementById(i)};
+  function R(x1,x2,y1,y2,st){return '<rect x="'+x1*S+'" y="'+y1*S+'" width="'+(x2-x1)*S+'" height="'+(y2-y1)*S+'" '+st+'/>'}
+  function Ln(x1,y1,x2,y2,st){return '<line x1="'+x1*S+'" y1="'+y1*S+'" x2="'+x2*S+'" y2="'+y2*S+'" '+st+'/>'}
+  function T(x,y,s,cls,a){return '<text class="'+cls+'" x="'+x*S+'" y="'+y*S+'" text-anchor="'+(a||'start')+'">'+s+'</text>'}
+  var COLS=[['P1',.1,.4,20,40,3],['P4',6,.4,25,40,3],['P5',9.9,.4,20,40,3],['P6',2.3,1.85,20,40,3],['P7',3.7,1.85,20,40,3],['P8',.1,4.9,20,40,3],
+    ['P9',3,4.9,20,40,3],['P10',6,4.9,20,40,3],['P11',9.9,4,20,40,3],['P14',4.9,4.9,40,20,3],['P12',.1,8.9,20,40,1],['P13',.1,10.9,20,40,1],['P15',4.9,8.9,20,40,1],['P16',4.9,10.9,40,20,1]];
+  // vigas: id, x1,y1,x2,y2, seção, tipo (n normal, a alavanca/viga-parede, c caixas, t trimmer)
+  var BR=[['V101',.1,.4,6,.4,'20×60','a'],['V102',6,.4,9.9,.4,'20×50','n'],['V103',.1,.4,.1,4.9,'20×50','n'],['V104',9.9,.4,9.9,4.9,'20×50','n'],
+    ['V105',.1,4.9,3,4.9,'20×40','n'],['V106',3,4.9,6,4.9,'20×40','n'],['V107',6,4.9,9.9,4.9,'20×50','n'],['V108',6,.4,6,4.9,'20×50','n'],
+    ['V109',.1,1.85,2.3,1.85,'15×40','n'],['V110',3.7,1.85,9.9,1.85,'15×40','n'],['V111',2.3,1.85,3.7,1.85,'20×40','n'],
+    ['V112',2.3,.4,2.3,1.85,'15×30','n'],['V113',3.7,.4,3.7,1.85,'15×30','n'],['V114',3,1.85,3,4.9,'20×50','n'],
+    ['V-C1',.1,2.8,3,2.8,'20×50','c'],['V-C2',3,2.8,6,2.8,'20×50','c']];
+  var BU=BR.filter(function(b){return b[0]!=='V-C1'&&b[0]!=='V-C2'}).concat([
+    ['V201',.1,4.9,.1,10.9,'20×50','n'],['V202',4.9,4.9,4.9,10.9,'20×50','n'],['V-T3',.1,6.5,4.9,6.5,'20×50','n'],['V-T1',1,6.5,1,10.9,'15×40','t'],
+    ['V-T4',1,8.9,4.9,8.9,'15×40','n'],['V-T5',.1,10.9,4.9,10.9,'20×50','n']]);
+  BU=BU.filter(function(b){return !(b[0]==='V114')||true});
+  function stairSteps(x1,x2,y1,y2,n,dir){ // degraus ao longo de Y
+    var s='<rect x="'+x1*S+'" y="'+y1*S+'" width="'+(x2-x1)*S+'" height="'+(y2-y1)*S+'" fill="var(--stair)" stroke="var(--ink)" stroke-width="1"/>';
+    for(var i=1;i<n;i++){var yy=(y1+(y2-y1)*i/n)*S; s+='<line x1="'+x1*S+'" x2="'+x2*S+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--muted)" stroke-width=".8"/>'}
+    var cx=(x1+x2)/2*S, ya=dir>0?y2*S-8:y1*S+8, yb=dir>0?y1*S+8:y2*S-8;
+    s+='<path d="M'+cx+' '+ya+' L'+cx+' '+(yb+(dir>0?6:-6))+'" stroke="var(--accent)" stroke-width="1.8" fill="none"/>';
+    s+='<path d="M'+(cx-4)+' '+(yb+(dir>0?7:-7))+' L'+(cx+4)+' '+(yb+(dir>0?7:-7))+' L'+cx+' '+yb+' Z" fill="var(--accent)"/>';
+    return s;
+  }
+  function spiral(cx,cy,r){
+    var s='<circle cx="'+cx*S+'" cy="'+cy*S+'" r="'+r*S+'" fill="var(--stair)" stroke="var(--ink)" stroke-width="1.2"/>';
+    for(var i=0;i<17;i++){var a=i*2*Math.PI/17-Math.PI/2; s+='<line x1="'+(cx*S+Math.cos(a)*.075*S)+'" y1="'+(cy*S+Math.sin(a)*.075*S)+'" x2="'+(cx*S+Math.cos(a)*r*S)+'" y2="'+(cy*S+Math.sin(a)*r*S)+'" stroke="var(--muted)" stroke-width=".8"/>'}
+    s+='<circle cx="'+cx*S+'" cy="'+cy*S+'" r="'+.075*S+'" fill="var(--ink)"/>';
+    return s;
+  }
+  function plan(){
+    var s='';
+    s+=R(0,10,0,13,'fill="var(--lot)" stroke="var(--muted)" stroke-dasharray="5 4"');
+    s+=R(-0.2,0,-0.2,13,'fill="var(--wallx)"')+R(10,10.2,-0.2,13,'fill="var(--wallx)"')+R(-0.2,10.2,-0.2,0,'fill="var(--wallx)"');
+    s+=R(6.8,9.8,5.6,12.6,'fill="var(--pool)" fill-opacity=".3" stroke="var(--muted)" stroke-dasharray="4 3"');
+    s+=T(8.3,9.2,'piscina','tm','middle');
+    var roof=lvl==='roof';
+    // lajes
+    s+=R(0.1,9.9,0.4,4.9,'fill="var(--bldg)" stroke="none"');
+    s+=R(2.4,3.6,0.3,1.8,'fill="var(--panel)" stroke="var(--ink)" stroke-dasharray="4 3"')+T(3,1.0,'poço','tm','middle');
+    if(roof){
+      [[6.4,7.4],[8.4,9.6]].forEach(function(c){s+=R(c[0],c[1],.6,1.4,'fill="var(--panel)" stroke="var(--ink)" stroke-dasharray="3 3"')});
+      s+=T(6.9,1.05,'zen.','tm','middle')+T(9,1.05,'zen.','tm','middle');
+      s+=R(1.2,4.8,1.9,3.7,'fill="var(--tank)" stroke="var(--ink)" stroke-width="1.2"');
+      [2.3,3.7].forEach(function(cx){s+='<circle cx="'+cx*S+'" cy="'+2.8*S+'" r="'+.7*S+'" fill="var(--pool)" fill-opacity=".6" stroke="var(--ink)"/>'});
+      s+=T(3,3.92,'caixas d’água 2×1.500 L','lbl','middle');
+      s+=R(5.2,9.9,2.1,4.7,'fill="none" stroke="var(--muted)" stroke-dasharray="2 3"')+T(7.6,3.55,'área de lazer','t','middle')+T(7.6,3.9,'≈ 22 m²','tm','middle');
+      s+=R(2.55,3.45,4.8,5.0,'fill="var(--panel)" stroke="none"')+Ln(2.55,4.9,3.45,4.9,'stroke="var(--accent)" stroke-width="3"');
+      s+=T(3,4.68,'portão','tm','middle');
+    } else {
+      // terraço, galeria, escadas
+      s+=R(0.1,4.9,4.9,10.9,'fill="var(--bldg)" stroke="none"');
+      s+=R(4.9,9.9,4.9,6.1,'fill="var(--bldg)" stroke="var(--muted)" stroke-dasharray="3 3"');
+      s+=T(7.4,5.65,'galeria em balanço 1,2 m','tm','middle');
+      s+=T(4.1,8.0,'terraço','t','middle');
+      s+=stairSteps(0.1,1.0,6.5,9.8,12,1);
+      s+=stairSteps(2.55,3.45,5.0,9.05,15,1);
+      s+=T(3.55,7.2,'escada','tm')+T(3.55,7.5,'da cobertura','tm');
+      s+=T(1.1,6.85,'escada principal','tm');
+      s+=spiral(4.15,11.95,.85)+T(4.15,13.3,'caracol Ø1,70','tm','middle');
+      s+=R(0.1,4.9,10.9,11.0,'fill="none" stroke="none"');
+    }
+    // vigas
+    var B=roof?BR:BU;
+    B.forEach(function(b){
+      var w=b[6]==='a'?5:b[6]==='n'?3.4:b[6]==='t'?2.2:3.4, col=b[6]==='c'?'var(--accent)':'var(--ink)';
+      s+=Ln(b[1],b[2],b[3],b[4],'stroke="'+col+'" stroke-width="'+w+'"'+(b[6]==='c'?' stroke-dasharray="7 3"':''));
+    });
+    if(!roof) s+=Ln(9.9,4.0,9.9,4.9,'stroke="var(--ink)" stroke-width="3.4"');
+    // pilares
+    COLS.forEach(function(c){
+      if(roof&&c[5]===1) return;
+      s+=R(c[1]-c[3]/200,c[1]+c[3]/200,c[2]-c[4]/200,c[2]+c[4]/200,'fill="var(--accent)" stroke="var(--panel)" stroke-width="1"');
+    });
+    if(!roof){ s+=R(4.15-.15,4.15+.15,11.95-.15,11.95+.15,'fill="var(--accent)" stroke="var(--panel)"')+T(4.7,12.0,'P17','lbl'); }
+    // rótulos dos pilares
+    var pos={P1:[.4,.75],P4:[6.25,.75],P5:[9.6,.75],P6:[1.6,2.0],P7:[3.95,2.05],P8:[.4,5.25],P9:[2.35,5.15],P10:[6.25,5.15],P11:[9.6,4.4],P14:[4.65,5.25],P12:[.4,9.2],P13:[.4,11.2],P15:[4.65,9.2],P16:[4.65,11.2]};
+    COLS.forEach(function(c){ if(roof&&c[5]===1) return; var p=pos[c[0]]; s+=T(p[0],p[1],c[0],'lbl'); });
+    // rótulos das vigas
+    var bp=roof?{V101:[3,0.3],V102:[7.95,0.3],V103:[.22,3.4],V104:[9.5,3.1],V107:[7.95,5.1],V108:[6.1,3.4],V114:[3.1,4.5],'V-C1':[.7,2.65],'V-C2':[4.5,2.65]}
+               :{V101:[3,0.3],V102:[7.95,0.3],V103:[.22,3.4],V104:[9.5,3.1],V107:[7.95,5.05],V108:[6.1,3.4],V201:[.22,7.2],V202:[5.0,7.2],'V-T3':[1.6,6.4],'V-T1':[1.1,10.2],'V-T4':[3.2,8.8],'V-T5':[2.6,10.82]};
+    B.forEach(function(b){var p=bp[b[0]]; if(p) s+=T(p[0],p[1],b[0]+' '+b[5],'bl','start')});
+    s+='<path class="dim" d="M0 '+(-.62*S)+' H'+10*S+' M0 '+(-.62*S-5)+' V'+(-.62*S+5)+' M'+10*S+' '+(-.62*S-5)+' V'+(-.62*S+5)+'"/>'+T(5,-.68,'10,00 m','tm','middle');
+    return '<svg viewBox="'+(-M)+' '+(-M)+' '+W+' '+(13*S+2*M)+'" role="img" aria-label="Planta de pilares e vigas">'+s+'</svg>';
+  }
+  var caps={roof:'Cobertura (+6,05 m). Dez pilares sobem até aqui. As vigas V-C1 e V-C2 recebem as caixas d’água, e a V101 vence 5,9 m e é a viga-parede dos fundos. Os quadrados tracejados são as claraboias, e a laje tem abertura para o poço de luz. A escada chega pelo portão da platibanda, em X = 3,0 m.',
+            upper:'Piso superior e terraço (+3,05 m). Os quatro pilares do terraço (P12, P13, P15 e P16) morrem aqui. A viga V-T3 recebe o topo da escada principal, e a V-T1 contorna a abertura. A galeria avança 1,2 m em balanço, e a caracol externa se apoia no pilar P17.'};
+  function legend(){
+    var a=[['var(--accent)','Pilar',''],['var(--ink)','Viga',''],['transparent','Viga sob as caixas','2px dashed var(--accent)'],['var(--stair)','Escada',''],['var(--panel)','Abertura / claraboia','1px dashed var(--ink)']];
+    return a.map(function(x){return '<span><i style="background:'+x[0]+(x[2]?';border:'+x[2]:'')+'"></i>'+x[1]+'</span>'}).join('');
+  }
+  var TB={roof:[['V101','P1–P4','5,9','20 × 60','Viga-parede dos fundos'],['V102','P4–P5','3,9','20 × 50',''],['V103','P1–P8','4,5','20 × 50','Divisa oeste'],['V104','P5–P11 e balanço','4,5','20 × 50','Divisa leste'],
+      ['V105 a V107','P8–P11','9,8','20 × 40 a 20 × 50','Beirada sul, com portão da escada'],['V108','P4–P10','4,5','20 × 50',''],['V114','V111–P9','3,05','20 × 50','Apoia as caixas'],
+      ['V-C1, V-C2','nos eixos Y = 2,8 m','2,9 / 3,0','20 × 50','Sob as caixas d’água'],['V109 a V113','em torno do poço','1,4 a 2,2','15 × 30 a 20 × 40','Bordas do poço de luz']],
+    upper:[['V101 a V114','mesmos eixos da cobertura','—','iguais','Piso superior da ala dos fundos'],['V201','P8–P12–P13','6,0','20 × 50','Divisa oeste do terraço'],['V202','P14–P15–P16','6,0','20 × 50','Beira leste do terraço'],
+      ['V-T3','V201–V202','4,8','20 × 50','Recebe o topo da escada principal'],['V-T1','V-T3–V-T5','4,4','15 × 40','Borda da abertura da escada'],['V-T4','V-T1–P15','3,9','15 × 40','Apoiada na V-T1 e no pilar'],['V-T5','P13–P16','4,8','20 × 50','Borda sul do terraço e apoio da caracol']]};
+  function table(){
+    var h='<thead><tr><th>Viga</th><th>Trecho</th><th class="n">Vão m</th><th class="n">Seção cm</th><th>Observação</th></tr></thead><tbody>';
+    TB[lvl].forEach(function(r){h+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td class="n">'+r[2]+'</td><td class="n">'+r[3]+'</td><td>'+r[4]+'</td></tr>'});
+    return h+'</tbody>';
+  }
+  function render(){
+    $('plan').innerHTML=plan(); $('legend').innerHTML=legend(); $('cap').textContent=caps[lvl]; $('tab-vigas').innerHTML=table();
+    document.querySelectorAll('[data-n]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.n===lvl))});
+  }
+  document.querySelectorAll('[data-n]').forEach(function(b){b.addEventListener('click',function(){lvl=b.dataset.n;render()})});
+
+  /* ----- corte da escada principal ----- */
+  function esc1(){
+    var k=44, ox=64, oz=250, X=function(y){return ox+(11.6-y)*k}, Z=function(z){return oz-z*k};
+    var s='', P=function(a){return a.map(function(p){return X(p[0])+','+Z(p[1])}).join(' ')};
+    var rr=function(y1,z1,y2,z2,st){return '<rect x="'+X(y2)+'" y="'+Z(z2)+'" width="'+(y2-y1)*-1*-k*-1+'" height="'+(z2-z1)*k+'" '+st+'/>'};
+    var rc=function(ya,za,yb,zb,st){var x1=Math.min(X(ya),X(yb)),x2=Math.max(X(ya),X(yb)),y1=Math.min(Z(za),Z(zb)),y2=Math.max(Z(za),Z(zb));return '<rect x="'+x1+'" y="'+y1+'" width="'+(x2-x1)+'" height="'+(y2-y1)+'" '+st+'/>'};
+    var t=function(y,z,txt,cls,a){return '<text class="'+cls+'" x="'+X(y)+'" y="'+Z(z)+'" text-anchor="'+(a||'start')+'">'+txt+'</text>'};
+    // terreno e piso
+    s+=rc(11.6,-0.3,4.2,0,'fill="var(--fill)" stroke="var(--muted)"');
+    s+=rc(11.0,0,10.9,3.05,'fill="var(--bldg)" stroke="var(--ink)"'); // parede sul
+    // lajes: terraço (laje com abertura entre Y 6,5 e 9,8)
+    s+=rc(11.0,2.9,9.8,3.05,'fill="var(--ink)"')+rc(6.5,2.9,4.2,3.05,'fill="var(--ink)"');
+    s+=rc(6.5,2.35,6.3,2.9,'fill="var(--ink)"');
+    s+=t(8.15,3.35,'abertura da laje','tm','middle');
+    s+='<path d="M'+X(9.8)+' '+(Z(3.05)-6)+' H'+X(6.5)+'" stroke="var(--muted)" stroke-width="1" stroke-dasharray="4 3"/>';
+    // degraus
+    var pts=[[10.9,0]];
+    for(var i=1;i<=17;i++){var y1=10.9-0.275*(i-1), y2=10.9-0.275*i, z=0.1835*i; pts.push([y1,z]); pts.push([y2,z]);}
+    s+='<polyline points="'+P(pts)+'" fill="none" stroke="var(--ink)" stroke-width="1.6"/>';
+    var under=[[10.9,0],[10.9-0.275*16,0.1835*16-0.0],[10.9-0.275*16,0.1835*16-0.16],[10.9,-0.16]];
+    s+='<polygon points="'+P([[10.9,0],[10.9,-0.16],[10.9-0.275*16-0.1,3.1-0.16-0.1],[10.9-0.275*16-0.1,3.1]])+'" fill="var(--blk)" fill-opacity=".5" stroke="var(--ink)" stroke-width=".8"/>';
+    // cota livre
+    var yh=9.8;
+    s+='<path class="dim" d="M'+X(yh)+' '+Z(0.734)+' V'+Z(2.9)+' M'+(X(yh)-4)+' '+Z(0.734)+' H'+(X(yh)+4)+' M'+(X(yh)-4)+' '+Z(2.9)+' H'+(X(yh)+4)+'"/>';
+    s+=t(yh-0.12,1.8,'2,17 m livre','lbl','end');
+    // guarda-corpo
+    s+='<path d="M'+X(6.55)+' '+Z(3.12)+' V'+Z(4.22)+'" stroke="var(--accent)" stroke-width="2"/>'+'<path d="M'+X(9.75)+' '+Z(3.05)+' V'+Z(4.15)+'" stroke="var(--accent)" stroke-width="2"/>';
+    // paredes e quarto
+    s+=rc(4.95,3.05,4.75,5.9,'fill="var(--bldg)" stroke="var(--ink)"');
+    s+=rc(4.9,0,4.7,3.05,'fill="var(--bldg)" stroke="var(--ink)"');
+    s+=t(4.8,4.4,'suítes','lbl','end');
+    // níveis
+    s+='<line x1="'+X(11.6)+'" x2="'+X(4.2)+'" y1="'+Z(0)+'" y2="'+Z(0)+'" stroke="var(--ink)" stroke-dasharray="6 3"/>';
+    s+=t(11.55,0.15,'±0,00','tm','end')+t(11.55,3.2,'+3,05 / +3,12','tm','end');
+    s+=t(10.95,-0.5,'hall','lbl','end')+t(11.1,0.55,'porta','lbl','end');
+    s+=t(7.9,1.0,'17 espelhos × 18,35 cm','lbl','middle')+t(7.9,0.62,'16 pisos × 27,5 cm','lbl','middle');
+    s+=t(5.7,3.5,'terraço','lbl','middle')+t(5.3,2.1,'cozinha','lbl','middle');
+    s+='<path class="dim" d="M'+X(10.9)+' '+Z(-0.55)+' H'+X(6.5)+' M'+X(10.9)+' '+(Z(-0.55)-4)+' V'+(Z(-0.55)+4)+' M'+X(6.5)+' '+(Z(-0.55)-4)+' V'+(Z(-0.55)+4)+'"/>'+t(8.7,-0.7,'4,40 m','tm','middle');
+    return '<svg viewBox="0 0 '+(ox+7.6*k+20)+' '+(oz+60)+'" role="img" aria-label="Corte da escada principal do térreo ao terraço">'+s+'</svg>';
+  }
+  $('esc1').innerHTML=esc1();
+
+  /* ----- corte da escada da cobertura ----- */
+  function esc2(){
+    var k=44, ox=50, oz=300, X=function(y){return ox+(10.3-y)*k}, Z=function(z){return oz-(z-3.0)*k};
+    var s='', P=function(a){return a.map(function(p){return X(p[0])+','+Z(p[1])}).join(' ')};
+    var rc=function(ya,za,yb,zb,st){var x1=Math.min(X(ya),X(yb)),x2=Math.max(X(ya),X(yb)),y1=Math.min(Z(za),Z(zb)),y2=Math.max(Z(za),Z(zb));return '<rect x="'+x1+'" y="'+y1+'" width="'+(x2-x1)+'" height="'+(y2-y1)+'" '+st+'/>'};
+    var t=function(y,z,txt,cls,a){return '<text class="'+cls+'" x="'+X(y)+'" y="'+Z(z)+'" text-anchor="'+(a||'start')+'">'+txt+'</text>'};
+    // terraço (laje)
+    s+=rc(10.9,2.9,4.9,3.12,'fill="var(--ink)"');
+    // galeria/parede da ala dos fundos
+    s+=rc(4.95,3.05,0.4,5.9,'fill="var(--bldg)" stroke="var(--ink)"');
+    s+=rc(4.9,5.9,0.4,6.05,'fill="var(--ink)"');
+    // platibanda com abertura para a escada
+    s+=rc(0.5,6.05,0.4,7.0,'fill="var(--ink)"');
+    s+=rc(4.9,6.05,4.78,7.0,'fill="var(--ink)" fill-opacity=".25" stroke="var(--ink)" stroke-dasharray="3 2"');
+    s+=t(5.0,7.1,'portão','lbl','middle');
+    // pilar P9
+    s+=rc(4.9,2.9,4.7,6.05,'fill="var(--accent)" stroke="var(--ink)"');
+    // caixas (tracejadas) na cobertura
+    s+=rc(3.5,6.05,2.1,7.4,'fill="var(--tank)" stroke="var(--ink)" stroke-dasharray="3 2"');
+    s+=t(2.8,7.6,'caixas d’água','lbl','middle');
+    // degraus
+    var pts=[[9.05,3.12]];
+    for(var i=1;i<=16;i++){var y1=9.05-0.27*(i-1), y2=9.05-0.27*i, z=3.12+0.18625*i; pts.push([y1,z]); pts.push([y2,z]);}
+    s+='<polyline points="'+P(pts)+'" fill="none" stroke="var(--ink)" stroke-width="1.6"/>';
+    s+='<polygon points="'+P([[9.05,3.12],[9.05,2.9],[5.0,6.1-0.2],[5.0,6.1]])+'" fill="var(--blk)" fill-opacity=".45" stroke="var(--ink)" stroke-width=".8"/>';
+    // guarda-corpo
+    s+='<path d="M'+X(9.0)+' '+Z(3.12)+' V'+Z(4.22)+'" stroke="var(--accent)" stroke-width="2"/>';
+    s+=t(7.0,5.4,'16 espelhos × 18,6 cm','lbl','middle')+t(7.0,5.0,'15 pisos × 27 cm','lbl','middle');
+    s+='<line x1="'+X(10.3)+'" x2="'+X(0.4)+'" y1="'+Z(3.12)+'" y2="'+Z(3.12)+'" stroke="var(--ink)" stroke-dasharray="6 3" stroke-width=".8"/>';
+    s+=t(10.25,3.25,'terraço +3,12','tm','end')+t(0.55,6.25,'cobertura +6,10','tm','end');
+    s+=t(2.3,5.0,'suíte','lbl','middle');
+    s+='<path class="dim" d="M'+X(9.05)+' '+Z(2.55)+' H'+X(5.0)+' M'+X(9.05)+' '+(Z(2.55)-4)+' V'+(Z(2.55)+4)+' M'+X(5.0)+' '+(Z(2.55)-4)+' V'+(Z(2.55)+4)+'"/>'+t(7.0,2.4,'4,05 m','tm','middle');
+    return '<svg viewBox="0 60 '+(ox+10.3*k+10)+' '+(oz-30)+'" role="img" aria-label="Corte da escada do terraço até a cobertura">'+s+'</svg>';
+  }
+  $('esc2').innerHTML=esc2();
+
+  /* ----- caracol externa ----- */
+  function esc3(){
+    var k=70, cx=210, cy=205, r=.85*k, s='';
+    s+='<rect x="30" y="20" width="'+(2*cx-60)+'" height="130" fill="var(--bldg)" stroke="var(--ink)" stroke-width="2"/>';
+    s+='<text class="t" x="'+cx+'" y="70" text-anchor="middle">terraço (+3,12)</text>';
+    s+='<rect x="'+(cx-45)+'" y="146" width="90" height="8" fill="var(--panel)"/><line x1="'+(cx-45)+'" x2="'+(cx+45)+'" y1="150" y2="150" stroke="var(--accent)" stroke-width="4"/>';
+    s+='<text class="tm" x="'+cx+'" y="140" text-anchor="middle">portão</text>';
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="var(--stair)" stroke="var(--ink)" stroke-width="1.4"/>';
+    for(var i=0;i<17;i++){var a=i*2*Math.PI/17-Math.PI/2; s+='<line x1="'+(cx+Math.cos(a)*.075*k)+'" y1="'+(cy+Math.sin(a)*.075*k)+'" x2="'+(cx+Math.cos(a)*r)+'" y2="'+(cy+Math.sin(a)*r)+'" stroke="var(--muted)" stroke-width=".9"/>'}
+    s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+.075*k+'" fill="var(--ink)"/>';
+    s+='<path class="dim" d="M'+(cx-r)+' '+(cy+r+16)+' H'+(cx+r)+' M'+(cx-r)+' '+(cy+r+11)+' V'+(cy+r+21)+' M'+(cx+r)+' '+(cy+r+11)+' V'+(cy+r+21)+'"/>';
+    s+='<text class="tm" x="'+cx+'" y="'+(cy+r+34)+'" text-anchor="middle">Ø 1,70 m · 17 degraus · coluna Ø 15 cm</text>';
+    s+='<text class="t" x="'+(cx+r+16)+'" y="'+(cy+4)+'">jardim de entrada</text>';
+    s+='<text class="lbl" x="'+(cx-r-12)+'" y="'+(cy-r-2)+'" text-anchor="end">início na laje</text>';
+    return '<svg viewBox="0 0 420 '+(cy+r+50)+'" role="img" aria-label="Planta da escada caracol externa entre o terraço e o jardim">'+s+'</svg>';
+  }
+  $('esc3').innerHTML=esc3();
+  render();
+})();
+</script>

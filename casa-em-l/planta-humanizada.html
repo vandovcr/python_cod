@@ -1,0 +1,342 @@
+<title>Planta Humanizada da Casa em L</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout: prancha ampliável com paredes, aberturas e móveis, tabelas de ambientes e boas práticas abaixo. */
+:root{
+  --bg:#EDF1F3; --panel:#FFFFFF; --ink:#14232C; --muted:#586A74; --line:#C7D3D9; --accent:#0B6B88; --accent-ink:#FFFFFF;
+  --warn-bg:#FFF3D6; --warn-ink:#5B3C00; --warn-line:#E3B04B; --ok:#2F7D4F; --no:#B4541A;
+  --f-social:#F2D9C5; --f-serv:#E2E8D2; --f-wet:#CBE1E9; --f-sleep:#D9E2F1; --f-out:#D9EAD0; --f-cov:#E7EED6; --f-deck:#D6C6AB; --f-pool:#7FC4DA; --f-circ:#E9EDF0; --f-lot:#F7F9FA; --f-wallx:#9AA3A8; --furn:#FFFFFF;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-head:"IBM Plex Sans Condensed","IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E181E; --panel:#15242C; --ink:#E5EDF1; --muted:#93A6B0; --line:#2B3E48; --accent:#5BC0DE; --accent-ink:#0E181E;
+  --warn-bg:#3A2D10; --warn-ink:#F3DDA8; --warn-line:#8A6A1F; --ok:#6FCB93; --no:#E58A4B;
+  --f-social:#5B4536; --f-serv:#3E4A3A; --f-wet:#2D4F5C; --f-sleep:#38456A; --f-out:#34503A; --f-cov:#3D4C35; --f-deck:#5E5039; --f-pool:#2B7E9C; --f-circ:#24353D; --f-lot:#101D24; --f-wallx:#6C777C; --furn:#1B2C35; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E181E; --panel:#15242C; --ink:#E5EDF1; --muted:#93A6B0; --line:#2B3E48; --accent:#5BC0DE; --accent-ink:#0E181E;
+  --warn-bg:#3A2D10; --warn-ink:#F3DDA8; --warn-line:#8A6A1F; --ok:#6FCB93; --no:#E58A4B;
+  --f-social:#5B4536; --f-serv:#3E4A3A; --f-wet:#2D4F5C; --f-sleep:#38456A; --f-out:#34503A; --f-cov:#3D4C35; --f-deck:#5E5039; --f-pool:#2B7E9C; --f-circ:#24353D; --f-lot:#101D24; --f-wallx:#6C777C; --furn:#1B2C35; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55;
+  padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:920px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--font-head);font-weight:700;margin:0;text-wrap:balance}
+h1{font-size:clamp(28px,6vw,40px);line-height:1.08} h2{font-size:22px}
+p{margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);max-width:64ch;margin-top:8px}
+.warn{background:var(--warn-bg);color:var(--warn-ink);border:1px solid var(--warn-line);border-radius:8px;padding:12px 14px;max-width:80ch}
+.board{background:var(--panel);border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column}
+.controls{display:flex;flex-wrap:wrap;gap:10px 16px;padding:12px;border-bottom:1px solid var(--line)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{font:500 14px var(--font-body);background:transparent;color:var(--ink);border:0;padding:8px 14px;cursor:pointer;min-height:40px}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.stage{padding:12px;overflow-x:auto}
+.stage svg{display:block;margin:0 auto;height:auto}
+.caption{padding:0 12px 14px;color:var(--muted);font-size:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;padding:0 12px 12px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:10px;border:1px solid var(--ink);vertical-align:-1px;margin-right:5px}
+.tn{font-family:var(--font-body);font-size:11px;fill:var(--ink);font-weight:600}
+.ta{font-family:var(--font-mono);font-size:8.5px;fill:var(--muted)}
+.tf{font-family:var(--font-mono);font-size:7.5px;fill:var(--muted)}
+.tm{font-family:var(--font-mono);font-size:9.5px;fill:var(--muted)}
+.wl{fill:var(--ink)}
+.fn{fill:var(--furn);stroke:var(--muted);stroke-width:.9}
+.fh{fill:none;stroke:var(--muted);stroke-width:.9;stroke-dasharray:3 2}
+.gl{stroke:var(--accent);stroke-width:3}
+.dr{fill:none;stroke:var(--muted);stroke-width:.9}
+.dl{stroke:var(--ink);stroke-width:1.2}
+.dim{stroke:var(--muted);stroke-width:1;fill:none}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--font-mono);white-space:nowrap}
+td.ok{color:var(--ok);font-weight:600} td.no{color:var(--no);font-weight:600}
+.scroll{overflow-x:auto}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px}
+.section{display:flex;flex-direction:column;gap:12px}
+ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+li{max-width:72ch}
+</style>
+
+<div class="wrap">
+<header>
+  <span class="eyebrow">Layout interno · paredes, aberturas e móveis</span>
+  <h1>Planta Humanizada da Casa em L</h1>
+  <p class="lede">Disposição dos cômodos do térreo e do piso superior, com paredes, portas, janelas, móveis e as folgas de circulação medidas em cima da planta.</p>
+</header>
+
+<div class="warn" role="note"><strong>Estudo de layout.</strong> Paredes de 15 cm nas externas e de 12 cm nas internas, medidas internas descontando o acabamento. Mobiliário e instalações são sugestões para dimensionar os ambientes, e vão ser detalhados no projeto executivo.</div>
+
+<section class="section" aria-labelledby="t-plan">
+  <h2 id="t-plan">Plantas</h2>
+  <div class="board">
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Pavimento">
+        <button type="button" data-f="ground" aria-pressed="true">Térreo</button>
+        <button type="button" data-f="upper" aria-pressed="false">Superior · quartos</button>
+      </div>
+      <div class="seg" role="group" aria-label="Opções">
+        <button type="button" id="b-mov" aria-pressed="true">Móveis</button>
+        <button type="button" id="b-dim" aria-pressed="false">Medidas internas</button>
+        <button type="button" id="b-zoom" aria-pressed="false">Ampliar</button>
+      </div>
+    </div>
+    <div class="stage" id="stage"></div>
+    <div class="legend" id="legend"></div>
+    <p class="caption" id="cap"></p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="t-amb">
+  <h2 id="t-amb">Ambientes e medidas internas</h2>
+  <div class="panel scroll"><table id="tab-amb"></table></div>
+</section>
+
+<section class="section" aria-labelledby="t-bp">
+  <h2 id="t-bp">Boas práticas aplicadas</h2>
+  <div class="panel scroll"><table id="tab-bp"></table></div>
+  <p class="caption" style="padding:0">As folgas são as recomendadas em manuais de ergonomia e na NBR 9050 para uso residencial. Os códigos de obras municipais pedem áreas de iluminação e ventilação próprias, e a confirmação final é do seu arquiteto e da prefeitura.</p>
+</section>
+
+<section class="section" aria-labelledby="t-aj">
+  <h2 id="t-aj">Pontos de atenção</h2>
+  <ul>
+    <li><strong>Sala estreita.</strong> A sala tem 3,65 × 3,74 m livres e é cortada pela passagem das portas de vidro. O sofá fica a 0,8 m do vidro, e a TV na parede da escada fica a 1,65 m do sofá. Para um sofá de 3 lugares com chaise, o jeito é avançar sobre o hall, o que pede estudo.</li>
+    <li><strong>Quartos.</strong> Os dormitórios das suítes 2 e 3 têm cerca de 9 m², com cama de casal e guarda-roupa de portas de correr. A circulação ao pé da cama fica em 0,47 m, no limite mínimo.</li>
+    <li><strong>Prumadas.</strong> Cozinha, lavanderia e os banhos das suítes 2 e 3 ficam em torno do poço de luz, então água, esgoto e exaustão sobem juntos pelo mesmo eixo.</li>
+    <li><strong>Gás.</strong> Preveja uma central de gás externa e ventilada, no jardim de entrada, e um ponto de gás na parede do cooktop.</li>
+    <li><strong>Elétrica.</strong> Pontos de força dedicados para forno, micro-ondas, geladeira, máquina de lavar, secadora e ar-condicionado dos quartos. Os pontos de ar-condicionado já ficam previstos na parede de cabeceira.</li>
+  </ul>
+</section>
+</div>
+
+<script>
+(function(){
+  var S=44, M=36, W=10*S+2*M, fl='ground', mov=true, dim=false, zoom=false;
+  var $=function(i){return document.getElementById(i)};
+  var f2=function(n){return n.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})};
+  var f1=function(n){return n.toLocaleString('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1})};
+  function R(x1,y1,x2,y2,cls,st){return '<rect class="'+(cls||'')+'" x="'+x1*S+'" y="'+y1*S+'" width="'+(x2-x1)*S+'" height="'+(y2-y1)*S+'" '+(st||'')+'/>'}
+  function T(x,y,s,cls,a){return '<text class="'+cls+'" x="'+x*S+'" y="'+y*S+'" text-anchor="'+(a||'middle')+'">'+s+'</text>'}
+  function fill(x1,y1,x2,y2,c){return R(x1,y1,x2,y2,'','fill="var(--f-'+c+')"')}
+  function wall(x1,y1,x2,y2){return R(x1,y1,x2,y2,'wl')}
+  function glass(x1,y1,x2,y2){return '<line class="gl" x1="'+x1*S+'" y1="'+y1*S+'" x2="'+x2*S+'" y2="'+y2*S+'"/>'}
+  function dash(x1,y1,x2,y2){return '<line class="dl" stroke-dasharray="3 3" x1="'+x1*S+'" y1="'+y1*S+'" x2="'+x2*S+'" y2="'+y2*S+'"/>'}
+  function swing(hx,hy,len,a0,a1){
+    var r=Math.PI/180, ex=hx+len*Math.cos(a0*r), ey=hy+len*Math.sin(a0*r), cx=hx+len*Math.cos(a1*r), cy=hy+len*Math.sin(a1*r);
+    var sw=a1>a0?1:0;
+    return '<path class="dr" d="M'+hx*S+' '+hy*S+' L'+ex*S+' '+ey*S+' M'+ex*S+' '+ey*S+' A'+len*S+' '+len*S+' 0 0 '+sw+' '+cx*S+' '+cy*S+'"/>';
+  }
+  function F(x1,y1,x2,y2,lab,o){
+    o=o||{}; var s=R(x1,y1,x2,y2,o.hid?'fh':'fn','rx="'+(o.rx||1.5)+'"');
+    if(lab) s+=T((x1+x2)/2,(y1+y2)/2+.03,lab,'tf');
+    return s;
+  }
+  function stool(x,y){return '<circle class="fn" cx="'+x*S+'" cy="'+y*S+'" r="'+.18*S+'"/>'}
+  function chairs(xs,y1,y2){var s='';xs.forEach(function(x){s+=F(x-.22,y1,x+.22,y1+.45,'',{rx:3});s+=F(x-.22,y2-.45,x+.22,y2,'',{rx:3})});return s}
+  function steps(x1,x2,y1,y2,n){
+    var s='<rect x="'+x1*S+'" y="'+y1*S+'" width="'+(x2-x1)*S+'" height="'+(y2-y1)*S+'" fill="var(--f-circ)" stroke="var(--ink)" stroke-width="1"/>';
+    for(var i=1;i<n;i++){var yy=(y1+(y2-y1)*i/n)*S; s+='<line x1="'+x1*S+'" x2="'+x2*S+'" y1="'+yy+'" y2="'+yy+'" stroke="var(--muted)" stroke-width=".7"/>'}
+    var cx=(x1+x2)/2*S; s+='<path d="M'+cx+' '+(y2*S-8)+' L'+cx+' '+(y1*S+10)+'" stroke="var(--accent)" stroke-width="1.6" fill="none"/><path d="M'+(cx-4)+' '+(y1*S+11)+' L'+(cx+4)+' '+(y1*S+11)+' L'+cx+' '+(y1*S+4)+' Z" fill="var(--accent)"/>';
+    return s;
+  }
+  function spiral(cx,cy,r){
+    var X=cx*S,Y=cy*S,s='<circle cx="'+X+'" cy="'+Y+'" r="'+r*S+'" fill="var(--f-circ)" stroke="var(--ink)" stroke-width="1"/>';
+    for(var i=0;i<17;i++){var a=i*2*Math.PI/17-Math.PI/2; s+='<line x1="'+(X+Math.cos(a)*.075*S)+'" y1="'+(Y+Math.sin(a)*.075*S)+'" x2="'+(X+Math.cos(a)*r*S)+'" y2="'+(Y+Math.sin(a)*r*S)+'" stroke="var(--muted)" stroke-width=".7"/>'}
+    return s;
+  }
+  function room(cx,cy,name,area,dm){
+    var s=T(cx,cy,name,'tn');
+    var y=cy+.2; if(dim&&dm){s+=T(cx,y,dm,'ta'); y+=.17}
+    if(area) s+=T(cx,y,area,'ta');
+    return s;
+  }
+  function dimsFrame(){
+    return '<path class="dim" d="M0 '+(-.6*S)+' H'+10*S+' M0 '+(-.6*S-5)+' V'+(-.6*S+5)+' M'+10*S+' '+(-.6*S-5)+' V'+(-.6*S+5)+'"/>'+T(5,-.68,'10,00 m','tm');
+  }
+
+  function ground(){
+    var s='';
+    s+=R(0,0,10,13,'','fill="var(--f-lot)" stroke="var(--muted)" stroke-dasharray="5 4"');
+    // pisos
+    s+=fill(.15,.3,5,5,'serv')+fill(.15,.3,2.4,2.4,'wet')+fill(5,.3,9.85,5,'cov')+fill(8.6,.3,9.85,2,'wet');
+    s+=fill(1.2,5,4.85,8.8,'social')+fill(1.1,8.8,3.2,10.85,'social')+fill(.2,5,1.1,10.85,'circ')+fill(3.2,8.8,4.85,10.85,'wet');
+    s+=fill(0,11,5,13,'out')+fill(5,5,10,12.6,'deck')+fill(6.8,5.6,9.8,12.6,'pool');
+    s+=fill(2.52,.3,3.6,1.8,'lot');
+    s+=R(2.52,.3,3.6,1.8,'','fill="none" stroke="var(--muted)" stroke-dasharray="3 3"');
+    // paredes externas
+    s+=R(0,0,10,.15,'','fill="none" stroke="var(--muted)" stroke-width=".8"')+wall(0,.15,10,.3);
+    s+=wall(0,.3,.15,11)+wall(9.85,.3,10,5);
+    s+=wall(0,10.85,1.2,11)+wall(2.2,10.85,5,11);
+    s+=wall(4.85,5,5,5.7)+wall(4.85,8.6,5,11);
+    s+=wall(5,4.85,6.2,5)+wall(9.6,4.85,10,5);
+    // paredes internas
+    s+=wall(.15,2.4,1.4,2.52)+wall(2.2,2.4,2.4,2.52)+wall(2.4,.3,2.52,2.52);
+    s+=wall(2.4,1.8,3.6,1.92)+wall(3.6,.3,3.72,1.92);
+    s+=wall(4.94,.3,5.06,1.3)+wall(4.94,2.4,5.06,4.85);
+    s+=wall(8.6,.3,8.72,2)+wall(8.6,2,8.8,2.12)+wall(9.5,2,9.85,2.12);
+    s+=wall(.15,4.94,1.2,5.06)+wall(4.4,4.94,4.85,5.06);
+    s+=wall(1.1,6.5,1.2,8.8);
+    s+=wall(3.12,8.8,3.24,9.2)+wall(3.12,10,3.24,10.85)+wall(3.2,8.74,4.85,8.86);
+    // aberturas
+    s+=glass(6.2,5,9.6,5)+glass(5,5.7,5,8.6)+glass(3.6,.4,3.6,1.4)+glass(2.7,1.8,3.3,1.8)+glass(2.4,.4,2.4,1.5);
+    s+=dash(5,1.3,5,2.4)+glass(4.85,9.5,4.85,10.2);
+    s+=swing(1.2,10.92,1.0,-90,0)+swing(2.2,2.46,.8,-90,-180)+swing(3.18,10,.8,0,-90)+swing(9.5,2.06,.7,-90,-180);
+    s+=T(1.7,11.35,'entrada','ta');
+    // escada
+    s+=steps(.2,1.1,6.5,10.85,17);
+    s+=T(.65,6.3,'sobe','ta');
+    s+=dash(1.1,8.8,1.1,10.85);
+    if(mov){
+      // lavanderia e despensa
+      s+=F(.2,.35,.85,1.0,'lavadora')+F(.9,.35,1.5,.9,'tanque')+F(.2,1.05,.85,1.7,'secad.')+F(2.0,.4,2.38,2.3,'estante');
+      // cozinha
+      s+=F(4.25,.4,4.95,1.15,'gel.');
+      s+=F(4.4,1.2,4.94,3.7,'')+F(4.5,1.45,4.88,2.25,'')+F(4.55,2.75,4.88,3.35,'')+F(4.35,2.65,4.94,3.45,'',{hid:1});
+      s+=F(.15,2.52,.75,4.5,'torre');
+      s+=F(1.7,3.75,3.5,4.55,'ilha')+stool(2.05,4.8)+stool(2.6,4.8)+stool(3.15,4.8);
+      // gourmet
+      s+=F(5.2,.35,6.1,1.05,'churras.')+F(5.3,.2,6.0,.35,'',{hid:1})+F(6.1,.35,8.0,.95,'bancada')+F(6.25,.45,6.75,.85,'cuba')+F(8.0,.35,8.55,.95,'frigobar');
+      s+=F(6.3,2.4,8.7,3.4,'mesa 2,4×1,0')+chairs([6.65,7.25,7.85,8.45],1.95,3.85);
+      s+=F(5.2,3.7,5.95,4.45,'poltr.')+F(5.2,2.7,5.95,3.45,'',{rx:3});
+      // WC piscina
+      s+=F(9.45,.35,9.85,1.0,'vaso')+F(8.76,.35,9.26,.75,'lav.');
+      // sala
+      s+=F(1.5,5.75,2.9,6.55,'mesa 1,4×0,8')+chairs([1.75,2.65],5.3,7.0);
+      s+=F(3.15,6.6,4.05,8.5,'sofá')+F(2.25,7.3,3.0,7.9,'centro')+F(1.22,7.0,1.5,8.4,'TV');
+      s+=F(3.4,8.4,3.85,8.75,'',{rx:3});
+      // hall e lavabo
+      s+=F(2.35,10.3,3.1,10.75,'banco')+F(2.3,9.0,3.05,9.3,'aparador');
+      s+=F(4.3,8.95,4.7,9.65,'vaso')+F(4.4,10.1,4.84,10.6,'lav.');
+    }
+    // rótulos
+    s+=room(1.45,1.7,'Lavand.','4,7 m²','2,25 × 2,10')+room(2.6,3.15,'Cozinha','16,7 m²','4,79 × 4,64');
+    s+=T(4.32,1.95,'cuba','tf','end')+T(4.32,3.1,'cooktop','tf','end');
+    s+=room(7.0,1.65,'Gourmet','21,1 m²','4,79 × 4,55');
+    s+=T(9.25,1.65,'WC','ta')+(dim?T(9.25,1.82,'1,13 × 1,70','tf'):'');
+    s+=room(2.3,8.3,'Sala','13,7 m²','3,65 × 3,74');
+    s+=room(2.1,9.85,'Hall','4,0 m²','2,0 × 2,0');
+    s+=room(4.02,9.55,'Lavabo','3,2 m²','1,61 × 1,99');
+    s+=T(3.05,1.15,'poço','tf')+T(3.05,1.3,'de luz','tf');
+    s+=T(1.9,12.35,'jardim de entrada','ta');
+    s+=spiral(4.15,11.95,.85);
+    
+    s+=T(8.3,9.0,'piscina','tm');
+    s+=T(5.75,6.0,'deck','ta');
+    s+=dimsFrame();
+    return svg(13,s,'Planta humanizada do térreo');
+  }
+
+  function upper(){
+    var s='';
+    s+=R(0,0,10,13,'','fill="var(--f-lot)" stroke="var(--muted)" stroke-dasharray="5 4"');
+    s+=fill(.15,1.92,3,4.85,'sleep')+fill(3,1.92,5.94,4.85,'sleep')+fill(6.06,1.92,9.85,4.85,'sleep');
+    s+=fill(.15,.3,2.4,1.8,'wet')+fill(3.6,.3,5.94,1.8,'wet')+fill(6.06,.3,7.84,1.8,'wet')+fill(7.96,.3,9.85,1.8,'wet');
+    s+=fill(2.52,.3,3.6,1.8,'lot');
+    s+=fill(0,5,10,6.1,'circ')+fill(.15,6.1,4.9,10.9,'out');
+    s+=R(2.52,.3,3.6,1.8,'','fill="none" stroke="var(--muted)" stroke-dasharray="3 3"');
+    // paredes
+    s+=R(0,0,10,.15,'','fill="none" stroke="var(--muted)" stroke-width=".8"')+wall(0,.15,10,.3);
+    s+=wall(0,.3,.15,5)+wall(9.85,.3,10,5);
+    s+=wall(0,4.85,.5,5)+wall(2.3,4.85,3.7,5)+wall(5.5,4.85,6.6,5)+wall(9.4,4.85,10,5);
+    s+=wall(2.4,.3,2.52,1.92)+wall(3.6,.3,3.72,1.92)+wall(2.4,1.8,3.6,1.92);
+    s+=wall(.15,1.8,.3,1.92)+wall(1.0,1.8,2.4,1.92);
+    s+=wall(3.6,1.8,5.1,1.92)+wall(5.8,1.8,5.94,1.92);
+    s+=wall(5.94,.3,6.06,4.85)+wall(2.94,1.92,3.06,4.85);
+    s+=wall(6.06,1.8,6.3,1.92)+wall(7.1,1.8,8.4,1.92)+wall(9.1,1.8,9.85,1.92)+wall(7.84,.3,7.96,1.8);
+    // aberturas
+    s+=glass(.5,5,2.3,5)+glass(3.7,5,5.5,5)+glass(6.6,5,9.4,5)+glass(2.4,.4,2.4,1.5)+glass(3.6,.4,3.6,1.5);
+    s+=dash(.3,1.86,1.0,1.86)+dash(5.1,1.86,5.8,1.86)+dash(6.3,1.86,7.1,1.86)+dash(8.4,1.86,9.1,1.86);
+    // escadas e caracol
+    s+=steps(.2,1.1,6.5,9.8,12)+steps(2.55,3.45,5.0,9.05,15);
+    s+=T(.65,6.3,'abertura','ta')+T(1.9,7.0,'escada da','tf')+T(1.9,7.14,'cobertura','tf');
+    s+=spiral(4.15,11.95,.85)+T(4.15,13.3,'caracol externa','ta');
+    s+=glass(3.7,10.9,4.6,10.9);
+    if(mov){
+      // suíte 3
+      s+=F(1.15,1.92,2.95,2.47,'roupeiro')+F(.2,2.95,2.18,4.53,'cama 1,58×1,98')+F(.2,2.5,.6,2.9,'')+F(.2,4.55,.6,4.95,'');
+      s+=F(.2,.35,1.1,1.25,'chuveiro')+F(1.35,.35,1.75,1.0,'vaso')+F(1.85,.35,2.35,.8,'lav.');
+      // suíte 2
+      s+=F(3.15,1.92,4.95,2.47,'roupeiro')+F(3.95,2.95,5.93,4.53,'cama 1,58×1,98')+F(5.53,2.5,5.93,2.9,'')+F(5.53,4.55,5.93,4.95,'');
+      s+=F(3.7,.35,4.6,1.25,'chuveiro')+F(4.8,.35,5.2,1.0,'vaso')+F(5.3,.35,5.8,.8,'lav.');
+      // suíte 1
+      s+=F(7.82,2.6,9.85,4.53,'cama king 1,93×2,03')+F(9.45,2.15,9.85,2.55,'')+F(9.45,4.57,9.85,4.97,'')+F(6.1,2.6,6.5,4.2,'rack')+F(6.2,4.2,7.0,4.85,'poltrona',{rx:4});
+      s+=F(6.1,.35,7.8,.9,'cabideiro')+F(6.1,.95,6.6,1.75,'');
+      s+=F(8.0,.35,9.0,1.25,'chuveiro')+F(9.3,.35,9.7,1.0,'vaso')+F(9.2,1.05,9.8,1.5,'lav.');
+      // terraço
+      s+=F(4.2,6.8,4.8,8.8,'banco')+F(3.6,9.4,4.8,10.3,'sofá externo')+'<circle class="fn" cx="'+1.9*S+'" cy="'+9.6*S+'" r="'+.3*S+'"/>';
+    }
+    s+=T(1.6,2.74,'Suíte 3 · 9,1 m²','tn')+T(4.5,2.74,'Suíte 2 · 8,6 m²','tn')+T(8.0,2.32,'Suíte 1 · 12,5 m²','tn');
+    if(dim){s+=T(1.6,2.9,'2,85 × 3,13','ta')+T(4.5,2.9,'2,88 × 2,93','ta')+T(8.0,2.48,'3,79 × 2,93','ta')}
+    s+=T(1.2,1.4,'banho','ta')+(dim?T(1.2,1.57,'2,25 × 1,50','tf'):'');
+    s+=T(4.8,1.4,'banho','ta')+(dim?T(4.8,1.57,'2,34 × 1,50','tf'):'');
+    s+=T(6.9,1.5,'closet','ta')+T(8.85,1.5,'banho','ta');
+    s+=T(3.05,1.15,'poço','tf')+T(3.05,1.3,'de luz','tf');
+    s+=T(5,5.6,'galeria de acesso às suítes','ta');
+    s+=T(3.2,10.95+.15,'','ta')+T(2.6,8.0,'terraço','tn');
+    s+=dimsFrame();
+    return svg(13,s,'Planta humanizada do piso superior');
+  }
+  function svg(h,inner,label){
+    var w=W, st=zoom?'width:190%;max-width:none':'width:100%;max-width:560px';
+    return '<svg style="'+st+'" viewBox="'+(-M)+' '+(-M)+' '+w+' '+(h*S+2*M)+'" role="img" aria-label="'+label+'">'+inner+'</svg>';
+  }
+  var LEG={ground:[['social','Social'],['serv','Cozinha'],['cov','Gourmet'],['wet','Molhados'],['out','Jardim'],['deck','Deck']],
+           upper:[['sleep','Dormitórios'],['wet','Banhos e closet'],['circ','Galeria'],['out','Terraço']]};
+  var CAP={ground:'Térreo. A cozinha abre para a sala pelo balcão da ilha e para a gourmet pelo passa-prato. A porta de entrada de 1,0 m abre direto no hall, ao lado da escada. As setas azuis mostram o sentido de subida das escadas.',
+           upper:'Piso superior. Cada suíte abre com porta de vidro de correr para a galeria, e os banhos abrem para dentro do quarto com porta de correr embutida, para não varrer a cama. Banhos e closet ficam na parede dos fundos, ao redor do poço de luz.'};
+  function render(){
+    $('stage').innerHTML=fl==='ground'?ground():upper();
+    $('legend').innerHTML=LEG[fl].map(function(l){return '<span><i style="background:var(--f-'+l[0]+')"></i>'+l[1]+'</span>'}).join('')+'<span><i style="background:var(--furn)"></i>Móvel</span><span><i style="background:var(--ink)"></i>Parede</span><span><i style="background:var(--accent);height:3px;vertical-align:3px"></i>Vidro</span>';
+    $('cap').textContent=CAP[fl];
+    document.querySelectorAll('[data-f]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.f===fl))});
+    $('b-mov').setAttribute('aria-pressed',String(mov)); $('b-dim').setAttribute('aria-pressed',String(dim)); $('b-zoom').setAttribute('aria-pressed',String(zoom));
+  }
+  document.querySelectorAll('[data-f]').forEach(function(b){b.addEventListener('click',function(){fl=b.dataset.f;render()})});
+  $('b-mov').addEventListener('click',function(){mov=!mov;render()});
+  $('b-dim').addEventListener('click',function(){dim=!dim;render()});
+  $('b-zoom').addEventListener('click',function(){zoom=!zoom;render()});
+
+  var AMB=[['Térreo','','',''],
+    ['Cozinha','4,79 × 4,64 (em L)','16,7','Ilha de 1,8 × 0,8 m com 3 banquetas, geladeira, cuba e cooktop na bancada leste.'],
+    ['Lavanderia e despensa','2,25 × 2,10','4,7','Lavadora, tanque, secadora e estante. Janela para o poço de luz.'],
+    ['Gourmet','4,79 × 4,55','21,1','Churrasqueira, bancada com cuba, frigobar e mesa de 8 lugares.'],
+    ['WC da piscina','1,13 × 1,70','1,9','Vaso e lavatório, com porta de 0,7 m e exaustão mecânica.'],
+    ['Sala de estar e jantar','3,65 × 3,74','13,7','Mesa de 4 lugares, sofá de 2 lugares, TV na parede da escada.'],
+    ['Hall de entrada','2,0 × 2,0','4,0','Banco, aparador e a escada ao lado.'],
+    ['Lavabo','1,61 × 1,99','3,2','Vaso e lavatório, com janela alta voltada para o deck.'],
+    ['Superior','','',''],
+    ['Suíte 1 · dormitório','3,79 × 2,93','12,5','Cama king, criados-mudos, rack e poltrona.'],
+    ['Suíte 1 · closet e banho','1,78 × 1,50 e 1,89 × 1,50','2,7 e 2,8','Chuveiro de 1,0 × 0,9 m.'],
+    ['Suíte 2 · dormitório','2,88 × 2,93','8,6','Cama de casal e roupeiro de 1,8 m.'],
+    ['Suíte 3 · dormitório','2,85 × 3,13','9,1','Cama de casal e roupeiro de 1,8 m.'],
+    ['Banhos das suítes 2 e 3','2,25 e 2,34 × 1,50','3,4 e 3,5','Chuveiro de 0,9 × 0,9 m.'],
+    ['Galeria','9,85 × 1,0','10','Circulação coberta de acesso às suítes.']];
+  var ah='<thead><tr><th>Ambiente</th><th class="n">Medida livre m</th><th class="n">Área m²</th><th>Móveis e instalações</th></tr></thead><tbody>';
+  AMB.forEach(function(r){ah+= r[1]===''?'<tr><td colspan="4"><strong>'+r[0]+'</strong></td></tr>':'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td><td>'+r[3]+'</td></tr>'});
+  $('tab-amb').innerHTML=ah+'</tbody>';
+
+  var BP=[['Corredores e passagens','mínimo 0,80 m, ideal 0,90 a 1,20 m','0,80 m entre o sofá e o vidro, 0,9 a 1,0 m na cozinha','ok'],
+    ['Cozinha','soma do triângulo geladeira–pia–fogão entre 4 e 8 m','4,6 m, tudo na bancada leste','ok'],
+    ['Bancada','profundidade de 0,60 m, altura de 0,90 m, ilha com 0,90 m livre','0,60 m e 0,90 m de passagem de cada lado da ilha','ok'],
+    ['Mesas','0,90 m livre atrás das cadeiras','1,0 m na gourmet e cerca de 0,35 m perto das banquetas na sala','no'],
+    ['Sofá e TV','distância de 1,5 a 2,5 m para TVs de 43 a 50 polegadas','1,65 m','ok'],
+    ['Camas','0,60 m ao lado e 0,90 m aos pés, no mínimo 0,45 m','0,60 m ao lado e 0,47 m aos pés (suítes 2 e 3)','no'],
+    ['Portas','0,80 m nos quartos, 0,70 m nos banhos, 1,0 m na entrada','0,8 m (vidro de correr), 0,7 m (correr) e 1,0 m','ok'],
+    ['Banheiros','box de 0,90 × 0,90 m, 0,60 m livres à frente do vaso','box de 0,9 × 0,9 m, vaso com cerca de 0,5 m livres','no'],
+    ['Escadas','espelho até 19 cm, piso de 25 a 30 cm, largura de 0,90 m','18,35 cm, 27,5 cm e 0,90 m','ok'],
+    ['Iluminação natural','janela com no mínimo 1/6 da área do piso nos dormitórios','Suíte 3 com 4,1 m² de vidro para 9,1 m² (45%)','ok'],
+    ['Ventilação','1/12 da área do piso, quando exigido','Janelas de correr e poço de luz atendem','ok'],
+    ['Pé-direito','mínimo de 2,50 m em ambientes de permanência','2,85 m','ok']];
+  var bh='<thead><tr><th>Item</th><th>Referência</th><th>No projeto</th><th>Situação</th></tr></thead><tbody>';
+  BP.forEach(function(r){bh+='<tr><td>'+r[0]+'</td><td>'+r[1]+'</td><td>'+r[2]+'</td><td class="'+(r[3]==='ok'?'ok':'no')+'">'+(r[3]==='ok'?'Atende':'No limite')+'</td></tr>'});
+  $('tab-bp').innerHTML=bh+'</tbody>';
+  render();
+})();
+</script>

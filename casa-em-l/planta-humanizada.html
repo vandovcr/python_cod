@@ -107,13 +107,13 @@ li{max-width:72ch}
 <section class="section" aria-labelledby="t-aj">
   <h2 id="t-aj">O que mudou e o que falta decidir</h2>
   <ul>
-    <li><strong>Lavabo sob a escada.</strong> Sai da lateral da sala e passa para o vão sob o lance alto da escada, com 0,95 × 1,98 m. O vaso fica na parte alta e o lavatório, na baixa, onde o pé-direito cai para cerca de 1,6 m. A sala e o hall formam agora um só ambiente de 21 m².</li>
-    <li><strong>Lavanderia ao lado da gourmet.</strong> Foi para o canto da gourmet, com janela para a frente e porta para a cozinha. O fundo da casa virou cozinha, e o poço de luz continua eliminado. Não há claraboia iluminando o térreo.</li>
-    <li><strong>Corredor nos fundos dos quartos.</strong> Nenhum corredor tem janela para o lado da piscina. O corredor corre pelos fundos e pela parede oeste, e os quartos ficam nas fachadas voltadas para a varanda e o deck.</li>
-    <li><strong>Três suítes e escritório em todo o L.</strong> A suíte 1 fica em cima da gourmet, a suíte 2 em cima do canto da sala e a suíte 3 em cima do hall, avançando 1,2 m em balanço sobre o deck. Banhos e closets das suítes 2 e 3 ficam no miolo, ventilados por claraboias. Esses dormitórios têm 9,8 e 9,9 m², o que é confortável para uma cama de casal.</li>
-    <li><strong>Escritório.</strong> Tem 7,5 m², só claraboia, sem janela externa. Serve com ar-condicionado, mas não vale como dormitório.</li>
-    <li><strong>Escada da cobertura.</strong> Passa a ser uma escada de marinheiro no canto do escritório, com alçapão na laje, suficiente para a manutenção das caixas d'água. Uma escada de degraus largos não cabe nesta disposição. Se você quiser usar a cobertura com frequência, o caminho é reabrir o desenho.</li>
-    <li><strong>Terraço e escada caracol.</strong> O terraço desapareceu, e a escada caracol externa deixou de existir.</li>
+    <li><strong>Lavanderia ao lado da gourmet.</strong> Saiu de dentro da casa e foi para o lado leste da gourmet, junto ao WC, com porta para a gourmet e janela para a frente. Água e esgoto da lavanderia e do WC sobem pela mesma parede. A faixa de sol é só a do deck, e um varal retrátil nessa faixa resolve a secagem.</li>
+    <li><strong>Escada moderna no miolo.</strong> A escada passa para o fundo, com degraus abertos, guarda-corpo de vidro e uma só linha reta de 17 espelhos. Ela chega ao hall de acesso aos quartos, no lugar do antigo escritório.</li>
+    <li><strong>Lavabo sob a escada.</strong> Fica sob o lance alto, com 0,88 × 2,1 m e porta de correr para a cozinha. Ele saiu do lado direito da sala, que agora forma um só ambiente com o hall, com 21,5 m².</li>
+    <li><strong>Escritório pequeno.</strong> O escritório virou um cantinho no hall, com mesa e estante. O hall e o corredor interno levam a todos os quartos.</li>
+    <li><strong>Cozinha menor.</strong> Com a escada no miolo, a cozinha ficou com 12,6 m² e bancadas paralelas, e ganhou uma despensa de 5,2 m² no fundo oeste.</li>
+    <li><strong>Escada da cobertura na sacada.</strong> Uma caracol de 1,6 m de diâmetro sai do canto leste da sacada da suíte 1 e chega à laje da cobertura por um portão na platibanda. Os degraus são estreitos, com 22 cm na linha de caminhamento, então ela serve melhor para manutenção e uso eventual. A porta de vidro da suíte 1 encolheu para 1,3 m.</li>
+    <li><strong>Mais um caminho para a sacada.</strong> A sacada da suíte 1 passa a ser o único ponto de saída para a cobertura. Se você quiser outra saída para o deck, é preciso reabrir o desenho.</li>
     <li><strong>Outras pranchas.</strong> A estrutura, a fundação, a maquete 3D e a página principal ainda mostram a versão anterior e precisam ser refeitas depois que você aprovar este layout.</li>
   </ul>
 </section>
@@ -168,57 +168,60 @@ li{max-width:72ch}
     var s='';
     s+=R(0,0,10,13,'','fill="var(--f-lot)" stroke="var(--muted)" stroke-dasharray="5 4"');
     // pisos
-    s+=fill(.15,.3,4.94,4.94,'serv')+fill(.15,3.9,1.1,6.4,'wet')+fill(5.06,.3,9.85,5,'cov')+fill(8.6,.3,9.85,2,'wet')+fill(5.06,3.14,6.7,4.85,'wet');
-    s+=fill(1.22,5.06,4.85,10.85,'social')+fill(.15,5.0,1.22,6.4,'social')+fill(.15,8.6,1.1,10.85,'circ');
+    s+=fill(2.22,.3,4.94,4.94,'serv')+fill(.15,.3,1.1,5.8,'circ')+fill(5.06,.3,9.85,5,'cov')+fill(8.72,.3,9.85,1.8,'wet')+fill(8.72,1.92,9.85,4.85,'wet');
+    s+=fill(.15,5.8,4.85,10.85,'social')+fill(2.22,5.06,4.85,5.8,'social');
     s+=fill(0,11,5,13,'out')+fill(5,5,10,12.6,'deck')+fill(6.8,5.6,9.8,12.6,'pool');
     // paredes externas
     s+=R(0,0,10,.15,'','fill="none" stroke="var(--muted)" stroke-width=".8"')+wall(0,.15,10,.3);
     s+=wall(0,.3,.15,11)+wall(9.85,.3,10,5);
     s+=wall(0,10.85,1.2,11)+wall(2.2,10.85,5,11);
     s+=wall(4.85,5,5,5.7)+wall(4.85,8.6,5,11);
-    s+=wall(5,4.85,5.5,5)+wall(6.4,4.85,6.9,5)+wall(9.6,4.85,10,5);
-    // cozinha, gourmet, lavanderia, wc
-    s+=wall(4.94,.3,5.06,1.3)+wall(4.94,2.9,5.06,3.7)+wall(4.94,4.5,5.06,4.85)+wall(4.4,4.94,4.85,5.06);
-    s+=wall(5.06,3.02,6.7,3.14)+wall(6.7,3.02,6.82,4.85);
-    s+=wall(8.6,.3,8.72,2)+wall(8.6,2,8.8,2.12)+wall(9.5,2,9.85,2.12);
-    // despensa e lavabo sob a escada
-    s+=wall(.15,3.82,1.22,3.94)+wall(1.1,3.9,1.22,5.5)+wall(1.1,6.3,1.22,6.75)+wall(1.1,7.55,1.22,8.5)+wall(.15,6.4,1.22,6.52)+wall(.15,8.5,1.22,8.62);
+    s+=wall(5,4.85,6.2,5)+wall(8.5,4.85,8.85,5)+wall(9.6,4.85,10,5);
+    // caixa da escada, despensa e lavabo sob a escada
+    s+=wall(1.1,.3,1.22,5.8)+wall(2.1,.3,2.22,1.0)+wall(2.1,1.8,2.22,5.8);
+    s+=wall(1.22,2.4,2.1,2.52)+wall(.15,5.8,.25,5.92)+wall(1.05,5.8,1.22,5.92);
+    // cozinha e gourmet
+    s+=wall(4.94,.3,5.06,1.3)+wall(4.94,2.9,5.06,4.85)+wall(4.4,4.94,4.85,5.06);
+    // wc e lavanderia no lado da gourmet
+    s+=wall(8.6,.3,8.72,1.0)+wall(8.6,1.7,8.72,1.8)+wall(8.72,1.8,9.85,1.92);
+    s+=wall(8.6,1.92,8.72,3.0)+wall(8.6,3.8,8.72,4.85);
     // aberturas
-    s+=glass(6.9,5,9.6,5)+glass(5.5,5,6.4,5)+glass(5,5.7,5,8.6)+dash(5,1.3,5,2.9);
-    s+=swing(1.2,10.92,1.0,-90,0)+swing(1.1,6.3,.8,90,0);
-    s+=dash(1.15,6.75,1.15,7.55)+swing(5.06,4.5,.8,-90,0)+swing(9.5,2.06,.7,-90,-180);
+    s+=glass(6.2,5,8.5,5)+glass(8.85,5,9.6,5)+glass(5,5.7,5,8.6)+dash(5,1.3,5,2.9);
+    s+=swing(1.2,10.92,1.0,-90,0)+swing(8.72,1.7,.7,-90,0)+dash(2.16,1.0,2.16,1.8)+swing(8.72,3.8,.8,-90,-180);
     s+=T(1.7,11.35,'entrada','ta');
-    // escada com lavabo sob o lance alto
-    s+=steps(.2,1.1,6.5,10.85,17);
-    s+=T(.65,10.1,'sobe','ta');
-    s+=R(.15,6.52,1.1,8.5,'','fill="var(--f-wet)" fill-opacity=".92"');
+    // escada moderna (degraus abertos) com lavabo sob o lance alto
+    s+=steps(1.2,2.1,1.4,5.8,17);
+    s+=T(1.65,6.05,'sobe','ta');
+    s+=R(1.22,.3,2.1,2.4,'','fill="var(--f-wet)" fill-opacity=".92"');
     if(mov){
+      // despensa
+      s+=F(.2,.6,.55,2.4,'')+F(.2,2.6,.55,4.4,'')+F(.2,4.5,.55,5.7,'');
+      // lavabo sob a escada
+      s+=F(1.3,.35,2.05,.8,'vaso')+F(1.3,1.5,1.8,1.95,'lav.');
       // cozinha
-      s+=F(.2,.35,.9,1.05,'gel.')+F(.9,.35,4.3,.95,'')+F(2.0,.4,2.7,.9,'')+F(4.4,1.2,4.94,3.0,'')+F(1.4,2.3,3.4,3.1,'ilha')+F(1.8,2.45,2.3,2.95,'')+stool(1.8,3.35)+stool(2.4,3.35)+stool(3.0,3.35);
-      s+=F(.2,4.0,.55,6.3,'despensa');
-      // lavanderia
-      s+=F(5.15,3.2,5.8,3.85,'lavad.')+F(5.15,3.9,5.8,4.55,'secad.')+F(6.05,3.2,6.6,3.75,'tanque');
+      s+=F(4.25,.4,4.95,1.15,'gel.')+F(4.4,1.2,4.94,3.7,'')+F(4.5,1.45,4.88,2.25,'')+F(4.4,2.95,4.94,3.55,'',{hid:1});
+      s+=F(2.24,2.2,2.84,4.2,'')+F(2.3,2.9,2.78,3.55,'');
+      s+=F(2.95,4.2,4.3,4.65,'bancada')+stool(3.3,4.82)+stool(3.95,4.82);
       // gourmet
       s+=F(5.2,.35,6.1,1.05,'churras.')+F(5.3,.2,6.0,.35,'',{hid:1})+F(6.1,.35,8.0,.95,'bancada')+F(6.25,.45,6.75,.85,'cuba')+F(8.0,.35,8.55,.95,'frigobar');
-      s+=F(6.3,2.0,8.7,3.0,'mesa 2,4×1,0')+chairs([6.65,7.25,7.85,8.45],1.55,3.45);
-      s+=F(9.0,3.4,9.8,4.7,'sofá',{rx:3});
-      s+=F(9.45,.35,9.85,1.0,'vaso')+F(8.76,.35,9.26,.75,'lav.');
-      // lavabo sob a escada
-      s+=F(.2,6.6,.6,7.3,'')+F(.2,7.85,.7,8.3,'');
+      s+=F(6.3,2.2,8.4,3.2,'mesa 2,1×1,0')+chairs([6.7,7.35,8.0],1.75,3.65);
+      s+=F(5.2,3.0,6.0,4.7,'sofá',{rx:3});
+      // wc e lavanderia
+      s+=F(9.45,.35,9.82,1.0,'vaso')+F(8.8,.35,9.3,.75,'lav.');
+      s+=F(8.78,2.0,9.4,2.65,'lavad.')+F(8.78,2.7,9.4,3.35,'secad.')+F(9.45,2.0,9.82,3.0,'tanque');
       // sala e hall
-      s+=F(2.0,5.35,3.6,6.15,'mesa 1,6×0,8')+chairs([2.3,3.3],4.95,6.55);
-      s+=F(1.25,6.85,1.5,8.25,'TV');
-      s+=F(3.0,6.85,3.9,9.05,'sofá 2,2×0,9')+F(2.0,7.4,2.7,8.2,'centro')+F(1.5,8.45,2.3,9.15,'poltr.',{rx:4});
+      s+=F(2.9,5.85,4.5,6.65,'mesa 1,6×0,8')+chairs([3.2,4.2],5.4,7.1);
+      s+=F(.25,7.2,.55,8.6,'TV');
+      s+=F(2.0,7.0,2.9,9.2,'sofá 2,2×0,9')+F(1.2,7.7,1.7,8.5,'centro')+F(3.4,8.0,4.2,8.8,'poltr.',{rx:4});
       s+=F(2.5,10.2,3.3,10.65,'banco')+F(3.6,10.3,4.8,10.65,'aparador');
     }
     // rótulos
-    s+=room(3.0,4.2,'Cozinha','19,9 m²','4,79 × 4,64');
-    s+=room(7.0,1.25,'Gourmet','17,1 m²','4,79 × 4,55');
-    s+=T(9.25,1.65,'WC','ta')+(dim?T(9.25,1.82,'1,13 × 1,70','tf'):'');
-    s+=T(6.0,4.0,'lavand.','tf')+T(6.0,4.15,'2,8 m²','tf');
-    
-    s+=T(.62,7.5,'lavabo','tf')+T(.62,7.63,'1,9 m²','tf');
-    s+=T(3.0,9.75,'Sala e hall · 21,0 m²','tn')+(dim?T(3.0,9.92,'3,63 × 5,79','ta'):'');
+    s+=T(.62,3.0,'despensa','tf')+T(.62,3.13,'5,2 m²','tf');
+    s+=T(1.66,1.2,'lavabo','tf')+T(1.66,1.33,'1,9 m²','tf');
+    s+=room(3.55,3.0,'Cozinha','12,6 m²','2,72 × 4,64');
+    s+=room(7.0,1.35,'Gourmet','17,5 m²','4,79 × 4,55');
+    s+=T(9.28,1.55,'WC','tf')+T(9.28,3.9,'lavand.','tf')+T(9.28,4.05,'3,3 m²','tf');
+    s+=T(3.7,9.7,'Sala e hall · 21,5 m²','tn')+(dim?T(3.7,9.87,'4,70 × 5,79','ta'):'');
     s+=T(1.9,12.35,'jardim de entrada','ta');
     s+=T(8.3,9.0,'piscina','tm');
     s+=T(5.75,6.0,'deck','ta');
@@ -230,44 +233,49 @@ li{max-width:72ch}
     var s='';
     s+=R(0,0,10,13,'','fill="var(--f-lot)" stroke="var(--muted)" stroke-dasharray="5 4"');
     // pisos
-    s+=fill(.15,.3,5,1.3,'circ')+fill(.15,1.3,1.1,6.5,'circ')+fill(.15,5.0,2.2,6.4,'circ')+fill(1.22,6.4,2.2,7.8,'circ')+fill(.2,6.5,1.1,9.8,'lot');
-    s+=fill(1.22,1.42,5,3.4,'serv')+fill(1.22,3.52,2.3,4.85,'serv')+fill(2.4,3.52,3.4,4.85,'wet')+fill(3.5,3.52,5,4.85,'wet');
+    s+=fill(.15,.3,5,1.3,'circ')+fill(.15,1.3,1.1,10.85,'circ')+fill(2.22,1.3,5,3.4,'serv');
+    s+=fill(1.22,1.4,2.1,4.5,'lot')+fill(2.4,3.52,3.4,4.85,'wet')+fill(3.5,3.52,5,4.85,'wet');
     s+=fill(5.12,1.92,9.85,4.85,'sleep')+fill(5.12,.3,7,1.8,'wet')+fill(7.12,.3,9.85,1.8,'wet');
-    s+=fill(2.32,5.12,6.1,7.7,'sleep');
+    s+=fill(2.32,5.12,6.1,7.7,'sleep')+fill(1.22,5.12,2.2,7.7,'wet');
     s+=fill(2.82,7.82,6.1,10.85,'sleep')+fill(1.22,7.92,2.7,9.0,'wet')+fill(1.22,9.12,2.7,10.85,'wet');
-    s+=fill(6.1,5,10,6.1,'circ');
+    s+=fill(6.1,5,10,6.1,'circ')+fill(8.0,6.1,10,6.8,'circ');
     // paredes externas
     s+=R(0,0,10,.15,'','fill="none" stroke="var(--muted)" stroke-width=".8"')+wall(0,.15,10,.3);
     s+=wall(0,.3,.15,11)+wall(9.85,.3,10,5);
-    s+=wall(1.1,4.85,6.1,5)+wall(.15,4.85,.15,5)+wall(6.1,4.85,6.6,5)+wall(9.4,4.85,10,5);
+    s+=wall(.15,4.85,.3,5)+wall(1.1,4.85,6.1,5)+wall(6.1,4.85,6.6,5)+wall(7.9,4.85,10,5);
     s+=wall(5.95,5,6.1,10.85)+wall(0,10.85,6.1,11);
-    // corredor dos fundos e escritório
-    s+=wall(1.1,1.3,2.0,1.42)+wall(2.9,1.3,5.0,1.42)+wall(1.1,1.42,1.22,4.85);
-    s+=wall(1.22,3.4,5.0,3.52)+wall(5.0,.3,5.12,1.2)+wall(5.0,2.3,5.12,4.85);
+    // hall e corredor (parede do lado do vazio da escada e do miolo)
+    s+=wall(1.1,1.42,1.22,4.85)+wall(2.1,3.4,2.22,4.85)+wall(2.22,3.4,5.0,3.52);
+    s+=wall(5.0,.3,5.12,2.4)+wall(5.0,3.3,5.12,4.85);
     s+=wall(2.3,3.52,2.42,4.85)+wall(3.4,3.52,3.5,4.85);
     // suíte 1
     s+=wall(5.12,1.8,5.4,1.92)+wall(6.2,1.8,8.4,1.92)+wall(9.1,1.8,9.85,1.92)+wall(7.0,.3,7.12,1.8);
-    // suíte 2 e 3 (hall, divisórias)
-    s+=wall(2.2,5.12,2.32,5.4)+wall(2.2,6.2,2.32,7.82)+wall(2.2,7.7,5.95,7.82)+wall(1.1,7.7,2.2,7.82);
-    s+=wall(1.22,7.82,1.34,7.92)+wall(2.7,7.82,2.82,8.2)+wall(2.7,9.0,2.82,10.85)+wall(1.22,9.0,2.7,9.12);
-    // guarda-corpo da escada
-    s+=dash(1.1,6.5,1.1,9.8)+dash(.2,6.5,1.1,6.5);
+    // suítes 2 e 3
+    s+=wall(1.1,5,1.22,5.3)+wall(1.1,6.1,1.22,8.2)+wall(1.1,9.0,1.22,10.85);
+    s+=wall(2.2,5.12,2.32,6.3)+wall(2.2,7.1,2.32,7.7)+wall(1.22,7.7,5.95,7.82);
+    s+=wall(2.7,7.82,2.82,8.2)+wall(2.7,9.0,2.82,10.85)+wall(1.22,9.0,2.7,9.12);
+    // guarda-corpo de vidro da escada
+    s+=dash(1.1,1.4,1.1,4.5)+dash(1.2,4.5,2.1,4.5);
     // aberturas
-    s+=glass(6.6,5,9.4,5)+glass(6.1,5.4,6.1,7.4)+glass(6.1,8.2,6.1,10.5)+glass(3.4,11,5.6,11);
-    s+=dash(2.0,1.36,2.9,1.36)+dash(5.0,.4,5.0,1.2)+dash(5.4,1.86,6.2,1.86)+dash(8.4,1.86,9.1,1.86);
-    s+=dash(2.26,5.4,2.26,6.2)+dash(1.34,7.76,2.1,7.76)+dash(2.76,8.2,2.76,9.0);
-    s+=dash(2.6,4.9,3.3,4.9)+dash(4.0,4.9,4.8,4.9);
-    // escada
-    s+=steps(.2,1.1,6.5,9.8,12);
-    s+=T(.65,10.4,'sobe','ta');
-    // claraboias (ventilação dos banhos e luz do escritório)
-    s+='<rect class="rm" style="fill:none;stroke:var(--ink);stroke-dasharray:3 3" x="'+3.7*S+'" y="'+3.75*S+'" width="'+.9*S+'" height="'+.6*S+'"/>';
-    s+='<rect class="rm" style="fill:none;stroke:var(--ink);stroke-dasharray:3 3" x="'+2.6*S+'" y="'+1.6*S+'" width="'+1.2*S+'" height="'+.9*S+'"/>';
+    s+=glass(6.6,5,7.9,5)+glass(6.1,5.4,6.1,7.4)+glass(6.1,8.2,6.1,10.5)+glass(3.4,11,5.6,11);
+    s+=dash(5.0,2.4,5.0,3.3)+dash(5.4,1.86,6.2,1.86)+dash(8.4,1.86,9.1,1.86);
+    s+=dash(1.15,5.3,1.15,6.1)+dash(2.26,6.3,2.26,7.1)+dash(1.15,8.2,1.15,9.0)+dash(2.76,8.2,2.76,9.0);
+    s+=dash(4.0,4.9,4.8,4.9);
+    // escada moderna que chega no hall dos quartos
+    s+=steps(1.2,2.1,1.4,4.5,12);
+    s+=T(1.65,4.75,'sobe','ta');
+    // claraboias (hall e banho)
+    s+='<rect class="rm" style="fill:none;stroke:var(--ink)" stroke-dasharray="3 3" x="'+2.8*S+'" y="'+1.6*S+'" width="'+1.4*S+'" height="'+1.1*S+'"/>';
+    s+='<rect class="rm" style="fill:none;stroke:var(--ink)" stroke-dasharray="3 3" x="'+3.7*S+'" y="'+3.75*S+'" width="'+.9*S+'" height="'+.6*S+'"/>';
+    // escada caracol da cobertura, na sacada da suíte 1
+    s+=spiral(8.9,6.0,.8);
+    s+=T(8.9,7.05,'caracol da cobertura','tf');
     if(mov){
-      // escritório
-      s+=F(2.5,2.85,4.3,3.35,'mesa')+F(3.1,2.35,3.7,2.85,'',{rx:6})+F(3.1,1.5,4.9,1.85,'estante')+F(1.26,1.5,1.9,2.1,'esc. marinh.');
-      // suíte 2 (banho e closet no miolo)
+      // hall com escritório compacto
+      s+=F(4.3,1.5,5.0,3.1,'mesa')+F(3.75,1.9,4.25,2.45,'',{rx:6})+F(2.3,1.5,2.7,3.1,'estante');
+      // suíte 2
       s+=F(3.5,5.12,5.08,7.1,'cama')+F(3.05,5.12,3.45,5.52,'')+F(5.12,5.12,5.52,5.52,'');
+      s+=F(1.25,5.2,1.55,7.4,'');
       s+=F(2.45,3.57,3.35,3.92,'roupas')+F(3.55,3.57,4.45,4.47,'chuv.')+F(4.55,3.6,4.95,4.25,'vaso')+F(4.5,4.3,4.95,4.8,'lav.');
       // suíte 3
       s+=F(3.7,7.82,5.28,9.8,'cama')+F(3.25,7.82,3.65,8.22,'')+F(5.32,7.82,5.72,8.22,'');
@@ -277,20 +285,19 @@ li{max-width:72ch}
       s+=F(5.15,.35,6.85,.9,'cabideiro')+F(5.15,.95,5.65,1.75,'');
       s+=F(7.2,.35,8.2,1.25,'chuv.')+F(9.3,.35,9.7,1.0,'vaso')+F(9.2,1.05,9.8,1.5,'lav.');
     }
-    s+=T(3.1,.85,'corredor interno','ta');
+    s+=T(3.0,.85,'corredor interno','ta');
     s+=T(.62,3.2,'corredor','tf')+T(.62,3.33,'interno','tf');
-    s+=T(4.0,2.15,'Escritório · 7,5 m²','tn')+(dim?T(4.0,2.3,'3,78 × 1,98','ta'):'');
+    s+=T(3.6,2.85,'Hall + escritório','tn')+(dim?T(3.6,3.0,'2,78 × 2,1','ta'):'');
     s+=T(7.9,2.35,'Suíte 1 · 13,9 m²','tn')+(dim?T(7.9,2.5,'4,73 × 2,93','ta'):'');
     s+=T(6.0,1.2,'closet','tf')+T(8.5,1.5,'banho','ta');
     s+=T(4.2,7.4,'Suíte 2 · 9,8 m²','tn')+(dim?T(4.2,7.57,'3,78 × 2,58','ta'):'');
-    s+=T(4.5,10.2,'Suíte 3','tn')+T(4.5,10.38,'9,9 m²','ta')+(dim?T(4.5,10.54,'3,28 × 3,03','tf'):'');
-    s+=T(1.76,4.2,'rouparia','tf');
+    s+=T(4.5,10.2,'Suíte 3 · 9,9 m²','tn')+(dim?T(4.5,10.37,'3,28 × 3,03','ta'):'');
+    s+=T(2.9,4.18,'closet','tf')+T(1.5,6.4,'closet','tf');
     s+=T(1.95,8.6,'closet','tf')+T(1.95,10.7,'banho','tf');
-    s+=T(1.7,6.7,'hall','tf');
-    s+=T(8.05,5.65,'varanda da suíte 1','ta');
+    s+=T(7.0,5.65,'sacada','ta');
     s+=T(8.0,8.5,'deck e piscina','tm')+T(8.0,8.7,'(abaixo)','tf');
     s+=dimsFrame();
-    return svg(13,s,'Planta humanizada do piso superior com corredor interno');
+    return svg(13,s,'Planta humanizada do piso superior com hall de acesso aos quartos');
   }
   function svg(h,inner,label){
     var w=W, st=zoom?'width:190%;max-width:none':'width:100%;max-width:560px';
@@ -298,8 +305,8 @@ li{max-width:72ch}
   }
   var LEG={ground:[['social','Social'],['serv','Cozinha'],['cov','Gourmet'],['wet','Molhados'],['out','Jardim'],['deck','Deck']],
            upper:[['sleep','Dormitórios'],['wet','Banhos e closet'],['circ','Galeria'],['out','Terraço']]};
-  var CAP={ground:'Térreo. A escada fica na parede oeste da sala, e o lavabo ocupa o vão sob o lance alto, com porta de correr para a sala. Sala e hall formam um só ambiente de 21 m². A lavanderia foi para o canto da gourmet, com janela para a frente, e a cozinha ganhou o fundo inteiro.',
-           upper:'Piso superior. O corredor interno corre pelos fundos e pela parede oeste, e todas as portas dos quartos abrem para ele ou para o hall da escada. As suítes ficam nas fachadas voltadas para a varanda e o deck. Banhos e closets ficam no miolo do L, ventilados por claraboias.'};
+  var CAP={ground:'Térreo. A escada moderna, de degraus abertos, sobe em linha reta pelo miolo do L, com o lavabo sob o lance alto e porta para a cozinha. A lavanderia e o WC ficam juntos no lado da gourmet, com porta e janela para a frente. Sala e hall formam um só ambiente de 21,5 m².',
+           upper:'Piso superior. A escada chega ao hall de acesso aos quartos, onde fica um cantinho de escritório. O corredor interno corre pelos fundos e pela parede oeste, e todas as portas dos quartos abrem para ele ou para o hall. A caracol da cobertura sai da sacada da suíte 1.'};
   function render(){
     $('stage').innerHTML=fl==='ground'?ground():upper();
     $('legend').innerHTML=LEG[fl].map(function(l){return '<span><i style="background:var(--f-'+l[0]+')"></i>'+l[1]+'</span>'}).join('')+'<span><i style="background:var(--furn)"></i>Móvel</span><span><i style="background:var(--ink)"></i>Parede</span><span><i style="background:var(--accent);height:3px;vertical-align:3px"></i>Vidro</span>';
@@ -313,31 +320,31 @@ li{max-width:72ch}
   $('b-zoom').addEventListener('click',function(){zoom=!zoom;render()});
 
   var AMB=[['Térreo','','',''],
-    ['Cozinha','4,79 × 4,64','19,9','Ilha com pia e 3 banquetas, bancada nos fundos, geladeira e despensa.'],
-    ['Despensa','0,95 × 2,5','2,4','Prateleiras, com porta para o encontro da cozinha com a sala.'],
-    ['Lavanderia','1,6 × 1,75','2,8','Lavadora, secadora e tanque, com janela para a frente e porta para a cozinha.'],
-    ['Gourmet','4,79 × 4,55','17,1','Churrasqueira, bancada com cuba, frigobar, mesa de 8 lugares e sofá.'],
-    ['WC da piscina','1,13 × 1,70','1,9','Vaso e lavatório, com exaustão mecânica.'],
-    ['Sala e hall','3,63 × 5,79','21,0','Mesa de 4 lugares, sofá de 2,2 m, TV na parede do lavabo e banco na entrada.'],
-    ['Lavabo sob a escada','0,95 × 1,98','1,9','Vaso na parte alta e lavatório na parte baixa, com exaustão mecânica.'],
-    ['Escada principal','0,90 × 4,35','3,9','17 espelhos de 18,35 cm, com o lavabo embaixo.'],
+    ['Cozinha','2,72 × 4,64','12,6','Bancadas paralelas, geladeira, cuba, cooktop e bancada de refeição com banquetas.'],
+    ['Despensa','0,95 × 5,5','5,2','Prateleiras e armários, com porta para a sala.'],
+    ['Lavabo sob a escada','0,88 × 2,1','1,9','Vaso na parte alta e lavatório na baixa, com porta de correr para a cozinha e exaustão mecânica.'],
+    ['Escada principal','0,90 × 4,40','4,0','Moderna, de degraus abertos e guarda-corpo de vidro. 17 espelhos de 18,35 cm.'],
+    ['Gourmet','4,79 × 4,55','17,5','Churrasqueira, bancada com cuba, frigobar, mesa de 6 lugares e sofá.'],
+    ['WC da piscina','1,13 × 1,50','1,7','Vaso e lavatório, com exaustão mecânica.'],
+    ['Lavanderia','1,13 × 2,93','3,3','Lavadora, secadora e tanque, no lado da gourmet, com janela para a frente e porta para a gourmet.'],
+    ['Sala e hall','4,70 × 5,79','21,5','Mesa de 4 lugares, sofá de 2,2 m, TV na parede oeste e banco na entrada.'],
     ['Superior','','',''],
-    ['Corredor interno','0,95 e 1,0 de largura','≈ 12','Pelos fundos e pela parede oeste, com hall ao pé da escada.'],
-    ['Escritório','3,78 × 1,98','7,5','Mesa, estante e escada de marinheiro para a cobertura. Claraboia.'],
-    ['Suíte 1 · dormitório','4,73 × 2,93','13,9','Cama king, rack e poltrona, com porta de vidro para a varanda.'],
-    ['Suíte 1 · closet e banho','1,88 e 2,73 × 1,50','2,8 e 4,1','Entrada pelo closet, a partir do corredor.'],
+    ['Corredor interno','0,95 e 1,0 de largura','≈ 12','Pelos fundos e pela parede oeste.'],
+    ['Hall e escritório','2,78 × 2,1','5,8','Hall de acesso aos quartos, com mesa e estante em um canto. Claraboia.'],
+    ['Suíte 1 · dormitório','4,73 × 2,93','13,9','Cama king, rack e poltrona, com porta de vidro para a sacada.'],
+    ['Suíte 1 · closet e banho','1,88 e 2,73 × 1,50','2,8 e 4,1','Entrada pelo dormitório.'],
     ['Suíte 2 · dormitório','3,78 × 2,58','9,8','Cama de casal, com janela para o deck.'],
-    ['Suíte 2 · closet e banho','1,0 × 1,33 e 1,5 × 1,33','1,3 e 2,0','No miolo, com claraboia para ventilação do banho.'],
+    ['Suíte 2 · closet e banho','0,98 × 2,58 e 1,5 × 1,33','2,5 e 2,0','Closet junto ao corredor e banho no miolo, com claraboia.'],
     ['Suíte 3 · dormitório','3,28 × 3,03','9,9','Cama de casal, com janelas para o deck e para a frente.'],
-    ['Suíte 3 · closet e banho','1,48 × 1,08 e 1,48 × 1,73','1,6 e 2,6','Entrada pelo closet, a partir do hall.'],
-    ['Varanda da suíte 1','3,9 × 1,1','4,3','Em balanço sobre o deck, com guarda-corpo de vidro.']];
+    ['Suíte 3 · closet e banho','1,48 × 1,08 e 1,48 × 1,73','1,6 e 2,6','Entrada pelo closet, a partir do corredor.'],
+    ['Sacada da suíte 1','3,9 × 1,1, com 2,0 × 0,7 no canto','4,3','Em balanço sobre o deck, com a caracol de acesso à cobertura.']];
   var ah='<thead><tr><th>Ambiente</th><th class="n">Medida livre m</th><th class="n">Área m²</th><th>Móveis e instalações</th></tr></thead><tbody>';
   AMB.forEach(function(r){ah+= r[1]===''?'<tr><td colspan="4"><strong>'+r[0]+'</strong></td></tr>':'<tr><td>'+r[0]+'</td><td class="n">'+r[1]+'</td><td class="n">'+r[2]+'</td><td>'+r[3]+'</td></tr>'});
   $('tab-amb').innerHTML=ah+'</tbody>';
 
   var BP=[['Corredores e passagens','mínimo 0,80 m, ideal 0,90 a 1,20 m','0,95 m nos corredores, 1,0 a 1,35 m na cozinha e 1,0 m entre o sofá e o vidro','ok'],
-    ['Cozinha','soma do triângulo geladeira–pia–fogão entre 4 e 8 m','6,2 m (geladeira, cooktop e pia da ilha)','ok'],
-    ['Bancada','profundidade de 0,60 m, altura de 0,90 m, ilha com 0,90 m livre','0,60 m e 0,90 m de passagem de cada lado da ilha','ok'],
+    ['Cozinha','soma do triângulo geladeira–pia–fogão entre 4 e 8 m','4,6 m (geladeira, cuba e cooktop)','ok'],
+    ['Bancada','profundidade de 0,60 m, altura de 0,90 m e corredor de 0,90 m a 1,2 m entre bancadas','0,60 m e corredor de 1,56 m entre as bancadas','ok'],
     ['Mesas','0,90 m livre atrás das cadeiras','1,0 m na gourmet e 0,5 m entre as banquetas da cozinha e a mesa da sala','no'],
     ['Sofá e TV','distância de 1,5 a 2,5 m para TVs de 43 a 50 polegadas','1,7 m','ok'],
     ['Camas','0,60 m ao lado e 0,90 m aos pés, no mínimo 0,45 m','0,45 a 0,50 m ao lado e 0,85 m aos pés (suítes 2 e 3)','no'],
